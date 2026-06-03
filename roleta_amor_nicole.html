@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Roleta do Amor — Nicole</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+:root {
+  --d: #D4A017;
+  --dc: #f5c842;
+  --r: #8B0000;
+  --rosa: #ff4d7d;
+  --bg: #0a0008;
+}
+body {
+  font-family:'Lato',sans-serif;
+  background:var(--bg);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px 16px;
+  overflow-x:hidden;
+}
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(139,0,0,0.35) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(100,0,60,0.3) 0%, transparent 50%);
+  pointer-events:none;
+  z-index:0;
+}
+
+.wrap {
+  position:relative;
+  z-index:1;
+  width:100%;
+  max-width:380px;
+  text-align:center;
+}
+
+/* HEADER */
+.brand { font-family:'Playfair Display',serif; font-size:10px; letter-spacing:5px; color:var(--d); text-transform:uppercase; margin-bottom:6px; }
+.titulo { font-family:'Playfair Display',serif; font-size:34px; color:#fff; line-height:1; }
+.titulo em { color:var(--rosa); font-style:italic; }
+.data { font-size:10px; letter-spacing:3px; color:rgba(255,255,255,0.3); text-transform:uppercase; margin:6px 0 28px; }
+
+/* TELA CÓDIGO */
+#tc {
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(212,160,23,0.2);
+  border-radius:24px;
+  padding:32px 24px;
+  backdrop-filter:blur(10px);
+}
+#tc p { font-size:13px; color:rgba(255,255,255,0.55); line-height:1.7; margin-bottom:20px; }
+.inp {
+  width:100%; background:rgba(255,255,255,0.06);
+  border:1px solid rgba(212,160,23,0.25); border-radius:50px;
+  padding:15px 20px; font-size:20px; color:#fff;
+  text-align:center; letter-spacing:6px; outline:none;
+  font-family:'Lato',sans-serif; margin-bottom:8px;
+  -webkit-appearance:none;
+}
+.inp:focus { border-color:var(--d); }
+.err { font-size:11px; color:#ff6b6b; min-height:16px; margin-bottom:10px; }
+.btn {
+  width:100%; border-radius:50px; padding:16px;
+  font-family:'Lato',sans-serif; font-size:14px;
+  font-weight:700; letter-spacing:2px; cursor:pointer;
+  border:none; -webkit-tap-highlight-color:transparent;
+  transition:transform .15s, opacity .15s;
+}
+.btn:active { transform:scale(0.97); opacity:0.9; }
+.btn-red { background:linear-gradient(120deg,#c0392b,#8B0000); color:var(--dc); border:2px solid var(--d); }
+
+/* TELA ROLETA */
+#tr { display:none; }
+
+.roleta-outer {
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin:20px 0 16px;
+}
+
+/* Anel decorativo */
+.roleta-outer::before {
+  content:'';
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+  background:conic-gradient(#D4A017, #f5c842, #D4A017, #a07010, #D4A017);
+  z-index:0;
+}
+.roleta-outer::after {
+  content:'';
+  position:absolute;
+  inset:-4px;
+  border-radius:50%;
+  background:var(--bg);
+  z-index:1;
+}
+
+#cv {
+  position:relative;
+  z-index:2;
+  border-radius:50%;
+  display:block;
+}
+
+.pin {
+  position:absolute;
+  top:-24px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:10;
+  font-size:0;
+  width:0; height:0;
+  border-left:10px solid transparent;
+  border-right:10px solid transparent;
+  border-top:26px solid var(--dc);
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+}
+
+.btn-spin {
+  width:100%; background:linear-gradient(120deg,#e84393,#c0392b);
+  border:2px solid rgba(255,255,255,0.2); border-radius:50px;
+  padding:18px; font-family:'Playfair Display',serif;
+  font-size:20px; color:#fff; cursor:pointer;
+  box-shadow:0 6px 30px rgba(200,40,100,0.4);
+  -webkit-tap-highlight-color:transparent;
+  transition:transform .15s;
+}
+.btn-spin:active:not(:disabled) { transform:scale(0.97); }
+.btn-spin:disabled { opacity:0.4; }
+
+/* TELA RESULTADO */
+#tRes { display:none; padding:10px 0; }
+.res-emoji { font-size:72px; margin-bottom:12px; animation:popIn .5s cubic-bezier(.175,.885,.32,1.275) forwards; }
+@keyframes popIn { from{transform:scale(0) rotate(-20deg);opacity:0} to{transform:scale(1) rotate(0);opacity:1} }
+.res-nome { font-family:'Playfair Display',serif; font-size:26px; color:var(--dc); line-height:1.2; margin-bottom:16px; }
+.res-msg {
+  font-family:'Playfair Display',serif; font-style:italic;
+  font-size:14px; color:rgba(255,255,255,0.75); line-height:1.8;
+  padding:18px 20px; margin-bottom:16px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(212,160,23,0.2); border-radius:16px;
+}
+.res-inst { font-size:11px; color:rgba(255,255,255,0.4); letter-spacing:1px; margin-bottom:24px; line-height:1.6; }
+.btn-ghost { background:transparent; border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.4); font-size:12px; letter-spacing:2px; }
+
+/* CONFETTI */
+.cf {
+  position:fixed; width:7px; height:7px; border-radius:2px;
+  pointer-events:none; z-index:999;
+  animation:cfFall linear forwards;
+}
+@keyframes cfFall {
+  0%{transform:translateY(-10px) rotate(0);opacity:1}
+  100%{transform:translateY(105vh) rotate(540deg);opacity:0}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="brand">Pizzaria & Esfiharia Nicole · Caculé</p>
+  <h1 class="titulo">Roleta do <em>Amor</em> 💕</h1>
+  <p class="data">12 de Junho · Dia dos Namorados</p>
+
+  <!-- CÓDIGO -->
+  <div id="tc">
+    <p>Peça o código secreto ao garçom e descubra o que o amor reserva para vocês esta noite 🌹</p>
+    <input class="inp" type="password" id="inp" placeholder="••••••••" maxlength="12" autocomplete="off">
+    <p class="err" id="err"></p>
+    <button class="btn btn-red" id="btnLib">Desbloquear ✨</button>
+  </div>
+
+  <!-- ROLETA -->
+  <div id="tr">
+    <div class="roleta-outer">
+      <div class="pin"></div>
+      <canvas id="cv" width="300" height="300"></canvas>
+    </div>
+    <button class="btn btn-spin" id="btnSpin">💫 Girar a Sorte!</button>
+  </div>
+
+  <!-- RESULTADO -->
+  <div id="tRes">
+    <div class="res-emoji" id="rEmoji"></div>
+    <div class="res-nome" id="rNome"></div>
+    <div class="res-msg" id="rMsg"></div>
+    <p class="res-inst" id="rInst"></p>
+    <button class="btn btn-ghost" id="btnFecha">✕ Fechar</button>
+  </div>
+</div>
+
+<script>
+var CODIGO = "nicole12";
+
+// 7 fatias IGUAIS visualmente — probabilidade controlada internamente
+var FATIAS = [
+  { nome:"Uma Rosa",        emoji:"🌹", corA:"#7b0a2a", corB:"#c0392b", peso:5,
+    msg:"Como uma rosa que floresce, que o amor de vocês cresça mais a cada dia. Feliz Dia dos Namorados da família Nicole!",
+    inst:"Mostre esta tela ao garçom para retirar sua rosa 💐" },
+  { nome:"Taça de Vinho",   emoji:"🍷", corA:"#3d0015", corB:"#891b3b", peso:5,
+    msg:"Que esse vinho seja tão doce quanto o amor de vocês. Brindem a essa noite especial!",
+    inst:"Mostre esta tela ao garçom para receber sua taça de vinho 🥂" },
+  { nome:"Esfiha Doce",     emoji:"🍬", corA:"#7d003a", corB:"#e84393", peso:8,
+    msg:"Amor verdadeiro é como a nossa esfiha doce — uma vez que você prova, não consegue mais viver sem!",
+    inst:"Mostre esta tela ao garçom para receber sua esfiha doce 😋" },
+  { nome:"2 Esfihas Salgadas", emoji:"🥙", corA:"#6b2000", corB:"#d35400", peso:8,
+    msg:"Dizem que o caminho para o coração é pelo estômago. Vocês provaram que é verdade chegando até aqui!",
+    inst:"Mostre esta tela ao garçom para receber suas 2 esfihas salgadas 😍" },
+  { nome:"Um Drink",        emoji:"🍹", corA:"#3b0066", corB:"#8e44ad", peso:5,
+    msg:"Que essa noite seja tão refrescante e especial quanto esse drink. Saúde ao amor de vocês!",
+    inst:"Mostre esta tela ao garçom para escolher seu drink 🎉" },
+  { nome:"Desconto na
+Próxima Visita", emoji:"🎟️", corA:"#004d20", corB:"#27ae60", peso:8,
+    msg:"O amor verdadeiro sempre volta! Guardem esse presente para a próxima vez que quiserem renovar os votos... com pizza!",
+    inst:"Mostre esta tela ao garçom para anotar seu desconto especial 💚" },
+  { nome:"Quase lá...
+Tente novamente!", emoji:"💫", corA:"#1a1a2e", corB:"#2c3e50", peso:61,
+    msg:"O amor de vocês já é o maior prêmio desta noite! Que essa seja uma das muitas memórias deliciosas que vocês criarão juntos.",
+    inst:"Mas a noite ainda é jovem e a pizza está quentinha! ❤️" },
+];
+
+var N = FATIAS.length; // 7 fatias iguais visualmente
+var ANG = (2 * Math.PI) / N;
+var cv = document.getElementById("cv");
+var ctx = cv.getContext("2d");
+var cx = cv.width / 2, cy = cv.height / 2, R = cx - 6;
+var rot = 0;
+var girando = false;
+
+function desenhar(r) {
+  ctx.clearRect(0, 0, cv.width, cv.height);
+  for (var i = 0; i < N; i++) {
+    var ini = r + i * ANG - Math.PI/2;
+    var fim = ini + ANG;
+    var mid = (ini + fim) / 2;
+    // Gradiente radial por fatia
+    var grd = ctx.createRadialGradient(cx, cy, 10, cx, cy, R);
+    grd.addColorStop(0, FATIAS[i].corA);
+    grd.addColorStop(1, FATIAS[i].corB);
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, R, ini, fim);
+    ctx.closePath();
+    ctx.fillStyle = grd;
+    ctx.fill();
+    // Linha separadora dourada fina
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, R, ini, ini);
+    ctx.strokeStyle = "rgba(212,160,23,0.5)";
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    // Emoji
+    var dist = R * 0.68;
+    var ex = cx + Math.cos(mid) * dist;
+    var ey = cy + Math.sin(mid) * dist;
+    ctx.save();
+    ctx.translate(ex, ey);
+    ctx.rotate(mid + Math.PI/2);
+    ctx.font = "22px serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(FATIAS[i].emoji, 0, 0);
+    ctx.restore();
+    // Texto curto
+    var tx = cx + Math.cos(mid) * R * 0.38;
+    var ty = cy + Math.sin(mid) * R * 0.38;
+    ctx.save();
+    ctx.translate(tx, ty);
+    ctx.rotate(mid + Math.PI/2);
+    ctx.font = "bold 9px Lato, sans-serif";
+    ctx.fillStyle = "rgba(255,255,255,0.85)";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    var linhas = FATIAS[i].nome.split("\n");
+    for (var l = 0; l < linhas.length; l++) {
+      ctx.fillText(linhas[l].toUpperCase(), 0, (l - (linhas.length-1)/2) * 11);
+    }
+    ctx.restore();
+  }
+  // Centro
+  var gc = ctx.createRadialGradient(cx, cy, 0, cx, cy, 26);
+  gc.addColorStop(0, "#3a0010");
+  gc.addColorStop(1, "#1a0005");
+  ctx.beginPath();
+  ctx.arc(cx, cy, 26, 0, 2*Math.PI);
+  ctx.fillStyle = gc;
+  ctx.fill();
+  ctx.strokeStyle = "#f5c842";
+  ctx.lineWidth = 2.5;
+  ctx.stroke();
+  ctx.font = "18px serif";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText("❤️", cx, cy);
+}
+
+function sortearPremio() {
+  var rand = Math.random() * 100;
+  var acum = 0;
+  for (var i = 0; i < FATIAS.length; i++) {
+    acum += FATIAS[i].peso;
+    if (rand < acum) return i;
+  }
+  return FATIAS.length - 1;
+}
+
+function girar() {
+  if (girando) return;
+  girando = true;
+  document.getElementById("btnSpin").disabled = true;
+
+  var idxSorteado = sortearPremio();
+  // Calcular ângulo para parar nessa fatia (ponteiro no topo)
+  var angFatia = -Math.PI/2 - (idxSorteado * ANG + ANG/2);
+  var voltas = (6 + Math.floor(Math.random()*3)) * 2 * Math.PI;
+  // Ajustar para chegar no ângulo certo
+  var rotFinal = angFatia - rot + voltas;
+  // Garantir que gira sempre para frente
+  while (rotFinal < voltas - 2*Math.PI) rotFinal += 2*Math.PI;
+
+  var dur = 4500;
+  var t0 = null;
+  var r0 = rot;
+
+  function frame(ts) {
+    if (!t0) t0 = ts;
+    var t = Math.min((ts - t0) / dur, 1);
+    // Ease out quártica
+    var e = 1 - Math.pow(1 - t, 4);
+    rot = r0 + rotFinal * e;
+    desenhar(rot);
+    if (t < 1) {
+      requestAnimationFrame(frame);
+    } else {
+      rot = r0 + rotFinal;
+      desenhar(rot);
+      setTimeout(function() { mostrar(idxSorteado); }, 500);
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+function mostrar(idx) {
+  document.getElementById("tr").style.display = "none";
+  var f = FATIAS[idx];
+  document.getElementById("rEmoji").textContent = f.emoji;
+  document.getElementById("rNome").textContent = f.nome.replace("\n"," ");
+  document.getElementById("rMsg").textContent = "\u201c" + f.msg + "\u201d";
+  document.getElementById("rInst").textContent = f.inst;
+  document.getElementById("tRes").style.display = "block";
+  if (f.peso < 61) confetti();
+}
+
+function confetti() {
+  var cores = ["#D4A017","#ff4d7d","#fff","#c0392b","#8e44ad","#27ae60"];
+  for (var i = 0; i < 70; i++) {
+    var el = document.createElement("div");
+    el.className = "cf";
+    el.style.left = (Math.random()*100)+"vw";
+    el.style.background = cores[Math.floor(Math.random()*cores.length)];
+    el.style.animationDuration = (1.5+Math.random()*2.5)+"s";
+    el.style.animationDelay = (Math.random()*0.6)+"s";
+    document.body.appendChild(el);
+    setTimeout(function(e){return function(){e.remove()}}(el), 4000);
+  }
+}
+
+// Eventos
+document.getElementById("btnLib").addEventListener("click", function() {
+  var v = document.getElementById("inp").value.toLowerCase().trim();
+  if (v === CODIGO) {
+    document.getElementById("tc").style.display = "none";
+    document.getElementById("tr").style.display = "block";
+    desenhar(0);
+  } else {
+    document.getElementById("err").textContent = "Código incorreto. Peça ao garçom! 🙈";
+    document.getElementById("inp").value = "";
+  }
+});
+document.getElementById("btnSpin").addEventListener("click", girar);
+document.getElementById("btnFecha").addEventListener("click", function() {
+  // Volta para tela de código — nova mesa pode girar
+  document.getElementById("tRes").style.display = "none";
+  document.getElementById("tc").style.display = "block";
+  document.getElementById("inp").value = "";
+  document.getElementById("err").textContent = "";
+  rot = 0;
+  girando = false;
+  document.getElementById("btnSpin").disabled = false;
+});
+document.getElementById("inp").addEventListener("keyup", function(e) {
+  if (e.keyCode === 13) document.getElementById("btnLib").click();
+});
+</script>
+</body>
+</html>
