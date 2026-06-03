@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Roleta do Amor — Nicole Caculé</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ouro:#F5C00C;
+  --ouro-dark:#c8960a;
+  --rosa:#ff4d8d;
+  --preto:#09080a;
+}
+
+/* ── FUNDO ── */
+html,body{min-height:100%;width:100%;overflow-x:hidden}
+body{
+  font-family:'Montserrat',sans-serif;
+  background:var(--preto);
+  display:flex;flex-direction:column;align-items:center;
+  padding-bottom:50px;
+  position:relative;
+}
+.bg{
+  position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 5%,  rgba(160,80,0,.2)   0%,transparent 55%),
+    radial-gradient(ellipse 60% 45% at 85% 95%,  rgba(120,0,50,.2)   0%,transparent 55%),
+    radial-gradient(ellipse 80% 80% at 50% 40%,  rgba(245,192,12,.04)0%,transparent 65%),
+    #09080a;
+  animation:bgPulse 7s ease-in-out infinite alternate;
+}
+@keyframes bgPulse{to{filter:brightness(1.18)}}
+
+/* ── PARTÍCULAS ── */
+.pkl{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+.pk{position:absolute;border-radius:50%;animation:pkUp linear infinite;opacity:0}
+@keyframes pkUp{
+  0%  {transform:translateY(102vh);opacity:0}
+  8%  {opacity:1}
+  92% {opacity:.5}
+  100%{transform:translateY(-6vh);opacity:0}
+}
+
+/* ── LUZES ── */
+.luzes{width:100%;max-width:480px;position:relative;z-index:2}
+
+/* ── WRAP ── */
+.wrap{position:relative;z-index:2;width:100%;max-width:400px;padding:0 18px 20px;text-align:center}
+
+/* ── LOGO ── */
+.logo{
+  width:128px;height:128px;border-radius:50%;
+  background:#0e0c0f;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  margin:0 auto 14px;position:relative;
+  animation:logoPulse 3s ease-in-out infinite alternate;
+}
+.logo::before{
+  content:'';position:absolute;inset:-3px;border-radius:50%;z-index:-1;
+  background:conic-gradient(#F5C00C,#fff9c0,#c8960a,#7a5500,#c8960a,#fff9c0,#F5C00C);
+  animation:spin 8s linear infinite;
+}
+.logo::after{
+  content:'';position:absolute;inset:-18px;border-radius:50%;z-index:-2;
+  background:radial-gradient(circle,rgba(245,192,12,.3) 0%,transparent 65%);
+  animation:logoPulse 3s ease-in-out infinite alternate;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes logoPulse{
+  from{box-shadow:0 0 18px rgba(245,192,12,.3)}
+  to  {box-shadow:0 0 45px rgba(245,192,12,.65)}
+}
+.logo-sub{font-size:6px;letter-spacing:2.5px;color:rgba(255,255,255,.6);text-transform:uppercase;margin-bottom:2px}
+.logo-nm{
+  font-family:'Montserrat',sans-serif;font-weight:900;font-size:30px;color:#fff;
+  line-height:1;position:relative;text-shadow:0 0 18px rgba(255,255,255,.25)
+}
+.logo-tri{
+  position:absolute;top:-1px;left:50%;transform:translateX(-28%);
+  width:0;height:0;
+  border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:8px solid var(--ouro);
+  filter:drop-shadow(0 0 5px var(--ouro));
+}
+.logo-city{font-size:6px;letter-spacing:4px;color:var(--ouro);text-transform:uppercase;margin-top:3px}
+
+.titulo{font-family:'Playfair Display',serif;font-size:26px;color:#fff;line-height:1.2;margin-bottom:4px;animation:fadeD .7s ease both}
+.titulo em{color:var(--ouro);font-style:italic;text-shadow:0 0 22px rgba(245,192,12,.5)}
+.sub{font-size:9px;letter-spacing:4px;color:rgba(255,255,255,.25);text-transform:uppercase;margin-bottom:26px;animation:fadeD .7s .1s ease both}
+@keyframes fadeD{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+
+/* ── CARD ── */
+.card{
+  background:rgba(18,10,4,.65);
+  border:1px solid rgba(245,192,12,.22);
+  border-radius:22px;padding:28px 22px;
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 10px 50px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.05);
+  position:relative;overflow:hidden;animation:fadeU .7s .2s ease both;
+}
+.card::before{content:'';position:absolute;top:-1px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(245,192,12,.5),transparent)}
+@keyframes fadeU{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.card p{font-size:13px;color:rgba(255,255,255,.55);line-height:1.8;margin-bottom:20px}
+.card p strong{color:var(--ouro)}
+
+/* ── INPUT ── */
+.inp-w{position:relative;margin-bottom:8px}
+.inp{
+  width:100%;background:rgba(255,255,255,.05);
+  border:1.5px solid rgba(245,192,12,.2);border-radius:50px;
+  padding:15px 48px 15px 22px;font-size:20px;color:#fff;
+  text-align:center;letter-spacing:5px;outline:none;
+  font-family:'Montserrat',sans-serif;-webkit-appearance:none;
+  transition:border-color .3s,box-shadow .3s;
+}
+.inp::placeholder{opacity:.28;letter-spacing:3px;font-size:15px}
+.inp:focus{border-color:var(--ouro);box-shadow:0 0 0 4px rgba(245,192,12,.12)}
+.olho{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:20px;cursor:pointer;opacity:.4;transition:opacity .2s;user-select:none}
+.olho:hover{opacity:.9}
+.err{font-size:11px;color:#ff6666;min-height:18px;margin-bottom:10px;letter-spacing:.3px}
+
+/* ── BOTÕES ── */
+.btn{
+  width:100%;border-radius:50px;padding:17px;
+  font-family:'Montserrat',sans-serif;font-size:13px;
+  font-weight:700;letter-spacing:2px;cursor:pointer;border:none;
+  -webkit-tap-highlight-color:transparent;
+  transition:transform .13s,filter .2s,box-shadow .2s;
+  text-transform:uppercase;
+}
+.btn:active{transform:scale(.96)}
+.btn-ouro{
+  background:linear-gradient(135deg,#b07800,#F5C00C 40%,#ffe066 58%,#b07800);
+  color:#0a0600;
+  box-shadow:0 4px 22px rgba(245,192,12,.45),inset 0 1px 0 rgba(255,255,255,.25);
+  position:relative;overflow:hidden;
+}
+.btn-ouro::after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,.15),transparent 50%)}
+.btn-ouro:hover{filter:brightness(1.12);box-shadow:0 6px 30px rgba(245,192,12,.65)}
+
+/* ── ROLETA ── */
+#tr{display:none;animation:fadeU .5s ease both}
+.rw{position:relative;display:inline-flex;align-items:center;justify-content:center;margin:18px 0 20px}
+.rw-glow{position:absolute;inset:-30px;border-radius:50%;background:radial-gradient(circle,rgba(245,192,12,.22) 0%,transparent 60%);z-index:0;animation:logoPulse 2.5s ease-in-out infinite alternate}
+.rw::before{content:'';position:absolute;inset:-13px;border-radius:50%;background:conic-gradient(#F5C00C,#fff8a0,#c8960a,#6a4800,#c8960a,#fff8a0,#F5C00C);z-index:1;animation:spin 10s linear infinite}
+.rw::after{content:'';position:absolute;inset:-7px;border-radius:50%;background:var(--preto);z-index:2}
+#cv{position:relative;z-index:3;border-radius:50%;display:block}
+
+.pin{
+  position:absolute;top:-30px;left:50%;transform:translateX(-50%);z-index:10;
+  transition:transform .05s,filter .05s;
+  filter:drop-shadow(0 0 8px rgba(245,192,12,.9));
+}
+.pin.tick{transform:translateX(-50%) scaleY(1.25) translateY(-4px);filter:drop-shadow(0 0 16px #fff) drop-shadow(0 0 6px var(--ouro))}
+
+.btn-spin{
+  width:100%;
+  background:linear-gradient(135deg,#700000,#c0302a 40%,#e84040 58%,#700000);
+  border:2px solid rgba(245,192,12,.3);border-radius:50px;padding:20px;
+  font-family:'Playfair Display',serif;font-size:21px;font-style:italic;
+  color:#fff;cursor:pointer;
+  box-shadow:0 6px 32px rgba(200,30,30,.65),inset 0 1px 0 rgba(255,255,255,.12);
+  -webkit-tap-highlight-color:transparent;
+  transition:transform .13s,box-shadow .2s;
+  position:relative;overflow:hidden;
+  animation:spinPulse 2.2s ease-in-out infinite;
+}
+@keyframes spinPulse{
+  0%,100%{box-shadow:0 6px 32px rgba(200,30,30,.65),inset 0 1px 0 rgba(255,255,255,.12)}
+  50%{box-shadow:0 8px 50px rgba(240,60,60,.9),0 0 28px rgba(245,192,12,.25),inset 0 1px 0 rgba(255,255,255,.12)}
+}
+.btn-spin::after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,.12),transparent 50%)}
+.btn-spin:active:not(:disabled){transform:scale(.96);animation:none}
+.btn-spin:disabled{opacity:.28;animation:none;cursor:not-allowed}
+
+/* ── RESULTADO OVERLAY ── */
+#tRes{
+  display:none;
+  position:fixed;inset:0;z-index:100;
+  background:rgba(5,3,8,.88);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  overflow-y:auto;
+  padding:24px 18px 40px;
+  animation:overlayIn .4s ease both;
+}
+@keyframes overlayIn{from{opacity:0}to{opacity:1}}
+
+.res-inner{
+  max-width:380px;margin:0 auto;
+  display:flex;flex-direction:column;align-items:center;
+  min-height:100%;justify-content:center;
+  text-align:center;padding:20px 0;
+}
+
+.res-emoji{font-size:90px;line-height:1;margin-bottom:16px;animation:popIn .6s cubic-bezier(.175,.885,.32,1.5) both}
+@keyframes popIn{from{transform:scale(0) rotate(-30deg);opacity:0;filter:blur(10px)}to{transform:scale(1) rotate(0);opacity:1;filter:blur(0)}}
+
+.res-ganhou{
+  font-family:'Montserrat',sans-serif;font-weight:900;
+  font-size:11px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--preto);
+  background:linear-gradient(135deg,#b07800,#F5C00C,#ffe066,#b07800);
+  padding:6px 24px;border-radius:50px;margin-bottom:18px;
+  box-shadow:0 2px 18px rgba(245,192,12,.5);
+  animation:fadeU .5s .2s ease both;
+}
+.res-ganhou.amor{background:linear-gradient(135deg,#6b3080,#b060c0,#6b3080)}
+
+.res-premio{
+  font-family:'Playfair Display',serif;font-size:32px;color:#fff;
+  line-height:1.2;margin-bottom:20px;
+  text-shadow:0 0 40px rgba(245,192,12,.35);
+  animation:fadeU .5s .3s ease both;
+}
+
+.res-card{
+  background:rgba(245,192,12,.07);
+  border:1px solid rgba(245,192,12,.2);
+  border-radius:18px;padding:20px 20px;
+  margin-bottom:18px;width:100%;
+  animation:fadeU .5s .4s ease both;
+}
+.res-msg{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:15px;color:rgba(255,255,255,.82);line-height:1.85;
+  margin-bottom:0;
+}
+.res-msg.amor{color:rgba(220,180,255,.85)}
+
+.res-inst{
+  font-size:13px;font-weight:700;color:var(--ouro);
+  letter-spacing:.4px;line-height:1.65;
+  padding:16px 18px;width:100%;
+  background:rgba(245,192,12,.09);
+  border-radius:14px;border:1px solid rgba(245,192,12,.2);
+  animation:fadeU .5s .5s ease both;
+  margin-bottom:22px;
+}
+.res-inst.amor{color:rgba(220,180,255,.9);background:rgba(120,60,180,.12);border-color:rgba(180,100,255,.2)}
+
+.btn-ghost{
+  background:transparent;
+  border:1.5px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.35);font-size:11px;letter-spacing:2px;
+  transition:border-color .2s,color .2s;
+  animation:fadeU .5s .6s ease both;
+}
+.btn-ghost:hover{border-color:rgba(255,255,255,.35);color:rgba(255,255,255,.6)}
+
+/* ── RODAPÉ ── */
+.rod{margin-top:28px;font-size:9px;letter-spacing:2.5px;color:rgba(255,255,255,.13);text-transform:uppercase}
+
+/* ── CONFETTI ── */
+.cf{position:fixed;top:-30px;pointer-events:none;z-index:200;animation:cfFall linear forwards}
+@keyframes cfFall{
+  0%  {transform:translateY(0)    rotate(0)   scale(1)  ;opacity:1}
+  100%{transform:translateY(115vh)rotate(720deg)scale(.4);opacity:0}
+}
+</style>
+</head>
+<body>
+
+<div class="bg"></div>
+<div class="pkl" id="pkls"></div>
+
+<!-- LUZES SVG -->
+<svg class="luzes" height="56" viewBox="0 0 400 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="gl"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <path d="M0,8 Q55,24 110,10 Q165,0 220,16 Q275,30 330,12 Q365,3 400,18" stroke="rgba(170,130,30,.45)" stroke-width="1.5" fill="none"/>
+  <g filter="url(#gl)">
+    <ellipse cx="30"  cy="18" rx="5.5" ry="7.5" fill="#F5C00C" style="animation:bk 2.0s 0.0s ease-in-out infinite"/>
+    <ellipse cx="78"  cy="10" rx="5.5" ry="7.5" fill="#ff4d8d" style="animation:bk 1.8s 0.3s ease-in-out infinite"/>
+    <ellipse cx="128" cy="7"  rx="5.5" ry="7.5" fill="#fff"    style="animation:bk 2.3s 0.7s ease-in-out infinite"/>
+    <ellipse cx="176" cy="16" rx="5.5" ry="7.5" fill="#F5C00C" style="animation:bk 1.9s 0.1s ease-in-out infinite"/>
+    <ellipse cx="222" cy="22" rx="5.5" ry="7.5" fill="#ff4d8d" style="animation:bk 2.1s 0.5s ease-in-out infinite"/>
+    <ellipse cx="270" cy="12" rx="5.5" ry="7.5" fill="#fff"    style="animation:bk 2.4s 0.2s ease-in-out infinite"/>
+    <ellipse cx="318" cy="8"  rx="5.5" ry="7.5" fill="#F5C00C" style="animation:bk 1.7s 0.6s ease-in-out infinite"/>
+    <ellipse cx="370" cy="20" rx="5.5" ry="7.5" fill="#ff4d8d" style="animation:bk 2.2s 0.4s ease-in-out infinite"/>
+  </g>
+</svg>
+<style>@keyframes bk{0%,100%{opacity:1}50%{opacity:.2;filter:brightness(.3)}}</style>
+
+<div class="wrap">
+
+  <!-- LOGO -->
+  <div style="animation:fadeD .7s ease both">
+    <div class="logo">
+      <div class="logo-sub">Pizzaria &amp; Esfiharia</div>
+      <div class="logo-nm">Nic<span style="position:relative">o<span class="logo-tri"></span></span>le</div>
+      <div class="logo-city">Caculé</div>
+    </div>
+  </div>
+
+  <h1 class="titulo">Roleta do <em>Amor</em> 💕</h1>
+  <p class="sub">12 de Junho · Dia dos Namorados</p>
+
+  <!-- TELA CÓDIGO -->
+  <div id="tc" class="card">
+    <p>Peça o <strong>código secreto</strong> ao garçom e descubra o que o amor reserva para vocês esta noite 🌹</p>
+    <div class="inp-w">
+      <input class="inp" id="inp" type="password"
+        placeholder="✦ ✦ ✦ ✦"
+        maxlength="12" autocomplete="off" autocorrect="off"
+        autocapitalize="none" spellcheck="false">
+      <span class="olho" id="olho" onclick="toggleVer()">👁️</span>
+    </div>
+    <p class="err" id="err"></p>
+    <button class="btn btn-ouro" id="btnLib">✨ Desbloquear</button>
+  </div>
+
+  <!-- TELA ROLETA -->
+  <div id="tr">
+    <div class="rw">
+      <div class="rw-glow"></div>
+      <div class="pin" id="pin">
+        <svg width="24" height="32" viewBox="0 0 24 32">
+          <defs><linearGradient id="pg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#fff8c0"/><stop offset="100%" stop-color="#c8960a"/></linearGradient></defs>
+          <polygon points="12,30 1,2 23,2" fill="url(#pg)"/>
+          <polygon points="12,30 1,2 23,2" fill="none" stroke="rgba(255,255,255,.35)" stroke-width=".8"/>
+          <ellipse cx="12" cy="7" rx="3.5" ry="3" fill="rgba(255,255,255,.55)"/>
+        </svg>
+      </div>
+      <canvas id="cv" width="310" height="310"></canvas>
+    </div>
+    <button class="btn btn-spin" id="btnSpin">💫 &nbsp;Girar a Sorte!</button>
+  </div>
+
+  <div class="rod">@pizzarianicoleculae &nbsp;·&nbsp; (77) 9 9956-5330</div>
+</div>
+
+<!-- RESULTADO (overlay tela cheia) -->
+<div id="tRes">
+  <div class="res-inner">
+    <div class="res-emoji" id="rEmoji"></div>
+    <div class="res-ganhou" id="rBadge"></div>
+    <div class="res-premio" id="rPremio"></div>
+    <div class="res-card">
+      <div class="res-msg" id="rMsg"></div>
+    </div>
+    <div class="res-inst" id="rInst"></div>
+    <button class="btn btn-ghost" id="btnFecha">✕ &nbsp; Nova Mesa</button>
+  </div>
+</div>
+
+<script>
+/* ── PARTÍCULAS ── */
+(function(){
+  var box=document.getElementById("pkls");
+  var c=["rgba(245,192,12,","rgba(255,80,140,","rgba(255,240,180,","rgba(200,80,20,"];
+  for(var i=0;i<24;i++){
+    var e=document.createElement("div");e.className="pk";
+    var s=3+Math.random()*9;
+    e.style.cssText="left:"+(Math.random()*100)+"%;width:"+s+"px;height:"+s+"px;"+
+      "background:"+c[Math.floor(Math.random()*c.length)]+(0.1+Math.random()*.3)+");"+
+      "filter:blur("+(1+Math.random()*3)+"px);"+
+      "animation-duration:"+(12+Math.random()*18)+"s;animation-delay:"+(Math.random()*16)+"s;";
+    box.appendChild(e);
+  }
+})();
+
+/* ── DADOS ── */
+var CODIGO="nicole12";
+
+var FATIAS=[
+  { emoji:"🍕", premio:"Pizza M da Promoção",
+    badge:"Você Ganhou! 🍕",
+    cor1:"#5a1a00",cor2:"#a83200",cor3:"#e04800",
+    peso:1,
+    msg:"\"Sorte grande! Vocês ganharam uma Pizza M da Promoção na próxima visita. Uma noite de amor merece uma pizza especial!\"",
+    inst:"🍕 Mostre esta tela ao garçom\npara registrar sua Pizza M da Promoção\n(válida na próxima visita)",
+    ganhou:true },
+
+  { emoji:"🍬", premio:"Uma Esfiha Doce",
+    badge:"Você Ganhou! 🍬",
+    cor1:"#7d003a",cor2:"#b02860",cor3:"#e04080",
+    peso:14,
+    msg:"\"Amor verdadeiro é como a nossa esfiha doce — irresistível, único e impossível de esquecer!\"",
+    inst:"🍬 Mostre esta tela ao garçom\npara receber sua esfiha doce",
+    ganhou:true },
+
+  { emoji:"🥙", premio:"2 Esfihas Salgadas",
+    badge:"Você Ganhou! 🥙",
+    cor1:"#5a1800",cor2:"#9c2c00",cor3:"#d04010",
+    peso:14,
+    msg:"\"O caminho para o coração sempre passou pelo estômago — e vocês comprovam isso chegando aqui juntos esta noite!\"",
+    inst:"🥙 Mostre esta tela ao garçom\npara receber suas 2 esfihas salgadas",
+    ganhou:true },
+
+  { emoji:"🎁", premio:"10% de Desconto",
+    badge:"Você Ganhou! 🎁",
+    cor1:"#003818",cor2:"#0e6030",cor3:"#1a9045",
+    peso:8,
+    msg:"\"O amor verdadeiro sempre quer voltar! Guardem esse presente para a próxima vez que quiserem renovar os votos... com pizza!\"",
+    inst:"🎁 Mostre esta tela ao garçom\npara registrar seu desconto de 10% na próxima visita",
+    ganhou:true },
+
+  { emoji:"🏷️", premio:"5% de Desconto Hoje",
+    badge:"Você Ganhou! 🏷️",
+    cor1:"#003040",cor2:"#006070",cor3:"#009090",
+    peso:8,
+    msg:"\"Uma surpresa doce para uma noite ainda mais especial! Aproveitem esse desconto agora mesmo no pedido de vocês!\"",
+    inst:"🏷️ Mostre esta tela ao garçom\npara aplicar 5% de desconto no pedido de hoje",
+    ganhou:true },
+
+  { emoji:"🍹", premio:"Um Drink à Escolha",
+    badge:"Você Ganhou! 🍹",
+    cor1:"#200040",cor2:"#581890",cor3:"#8030c0",
+    peso:7,
+    msg:"\"Que essa noite seja tão especial e refrescante quanto esse drink. Saúde ao amor eterno de vocês!\"",
+    inst:"🍹 Mostre esta tela ao garçom\npara escolher seu drink",
+    ganhou:true },
+
+  { emoji:"🍷", premio:"Uma Taça de Vinho",
+    badge:"Você Ganhou! 🍷",
+    cor1:"#3d0012",cor2:"#92182e",cor3:"#c0253f",
+    peso:7,
+    msg:"\"Que esse vinho seja tão doce quanto o amor de vocês. Brindem a essa noite que ficará para sempre na memória!\"",
+    inst:"🍷 Mostre esta tela ao garçom\npara receber sua taça de vinho",
+    ganhou:true },
+
+  { emoji:"💑", premio:"O Amor é o Prêmio",
+    badge:"Não foi dessa vez... 💑",
+    cor1:"#100808",cor2:"#200e0e",cor3:"#321515",
+    peso:41,
+    msg:"\"Não foi dessa vez, mas estar ao lado de quem você ama já é o maior presente que o universo poderia dar. Que essa noite fique para sempre no coração de vocês!\"",
+    inst:"❤️ A pizza está quentinha e\na noite ainda é jovem — aproveitem!",
+    ganhou:false },
+];
+
+/* ── CANVAS ── */
+var N=FATIAS.length, ANG=(2*Math.PI)/N;
+var cv=document.getElementById("cv"), ctx=cv.getContext("2d");
+var cx=cv.width/2, cy=cv.height/2, R=cx-8;
+var rot=0, girando=false, lastSeg=-1;
+
+function desenhar(r){
+  ctx.clearRect(0,0,cv.width,cv.height);
+
+  for(var i=0;i<N;i++){
+    var ini=r+i*ANG-Math.PI/2, fim=ini+ANG, mid=(ini+fim)/2;
+
+    /* fatia com 3 stops */
+    var g=ctx.createRadialGradient(cx,cy,6,cx,cy,R);
+    g.addColorStop(0, FATIAS[i].cor3);
+    g.addColorStop(.45,FATIAS[i].cor2);
+    g.addColorStop(1,  FATIAS[i].cor1);
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R,ini,fim);ctx.closePath();
+    ctx.fillStyle=g;ctx.fill();
+
+    /* borda dourada entre fatias */
+    ctx.save();
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(ini)*R,cy+Math.sin(ini)*R);
+    ctx.strokeStyle="rgba(245,192,12,.6)";ctx.lineWidth=1.5;ctx.stroke();
+    ctx.restore();
+
+    /* EMOJI grande no outer */
+    var eR=R*.72, ex=cx+Math.cos(mid)*eR, ey=cy+Math.sin(mid)*eR;
+    ctx.save();ctx.translate(ex,ey);
+    ctx.font="28px serif";ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.fillText(FATIAS[i].emoji,0,0);
+    ctx.restore();
+
+    /* EMOJI pequeno no inner (legenda) */
+    var iR=R*.3, ix=cx+Math.cos(mid)*iR, iy=cy+Math.sin(mid)*iR;
+    ctx.save();ctx.translate(ix,iy);
+    ctx.font="13px serif";ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.globalAlpha=.55;
+    ctx.fillText(FATIAS[i].emoji,0,0);
+    ctx.restore();
+  }
+
+  /* anel de sombra */
+  var sh=ctx.createRadialGradient(cx,cy,R*.5,cx,cy,R);
+  sh.addColorStop(0,"rgba(0,0,0,0)");sh.addColorStop(1,"rgba(0,0,0,.5)");
+  ctx.beginPath();ctx.arc(cx,cy,R,0,2*Math.PI);ctx.fillStyle=sh;ctx.fill();
+
+  /* borda dourada externa */
+  ctx.beginPath();ctx.arc(cx,cy,R,0,2*Math.PI);
+  ctx.strokeStyle="rgba(245,192,12,.9)";ctx.lineWidth=2.5;ctx.stroke();
+
+  /* brilho highlight */
+  var hl=ctx.createLinearGradient(cx-R,cy-R,cx,cy);
+  hl.addColorStop(0,"rgba(255,255,255,.09)");hl.addColorStop(1,"rgba(255,255,255,0)");
+  ctx.beginPath();ctx.arc(cx,cy,R,0,2*Math.PI);ctx.fillStyle=hl;ctx.fill();
+
+  /* hub central */
+  var hub=ctx.createRadialGradient(cx,cy,0,cx,cy,30);
+  hub.addColorStop(0,"#3a1800");hub.addColorStop(.7,"#160800");hub.addColorStop(1,"#080400");
+  ctx.beginPath();ctx.arc(cx,cy,30,0,2*Math.PI);ctx.fillStyle=hub;ctx.fill();
+  ctx.strokeStyle="rgba(245,192,12,.95)";ctx.lineWidth=3;ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy,22,0,2*Math.PI);
+  ctx.strokeStyle="rgba(245,192,12,.25)";ctx.lineWidth=1;ctx.stroke();
+  ctx.font="20px serif";ctx.textAlign="center";ctx.textBaseline="middle";
+  ctx.fillText("❤️",cx,cy+1);
+}
+
+/* ── TICK NO PINO ── */
+var tickTO=null;
+function tick(){
+  var pin=document.getElementById("pin");
+  pin.classList.add("tick");
+  clearTimeout(tickTO);
+  tickTO=setTimeout(function(){pin.classList.remove("tick")},90);
+}
+
+/* ── SORTEIO ── */
+function sortear(){
+  var r=Math.random()*100,a=0;
+  for(var i=0;i<FATIAS.length;i++){a+=FATIAS[i].peso;if(r<a)return i;}
+  return FATIAS.length-1;
+}
+
+/* ── GIRAR ── */
+function girar(){
+  if(girando)return;
+  girando=true;
+  document.getElementById("btnSpin").disabled=true;
+
+  var idx=sortear();
+  var angAlvo=-Math.PI/2-(idx*ANG+ANG/2);
+  var voltas=(8+Math.floor(Math.random()*4))*2*Math.PI;
+  var rotFinal=angAlvo-rot+voltas;
+  while(rotFinal<voltas-2*Math.PI)rotFinal+=2*Math.PI;
+
+  var dur=5500,t0=null,r0=rot;
+
+  function frame(ts){
+    if(!t0)t0=ts;
+    var t=Math.min((ts-t0)/dur,1);
+    /* ease out quártica suave */
+    var e=1-Math.pow(1-t,4);
+    rot=r0+rotFinal*e;
+    desenhar(rot);
+
+    /* tick no pino a cada segmento */
+    var normAngle=((rot+Math.PI/2)%(2*Math.PI)+2*Math.PI)%(2*Math.PI);
+    var seg=Math.floor(normAngle/ANG)%N;
+    if(seg!==lastSeg){lastSeg=seg;if(t<.92)tick();}
+
+    if(t<1){requestAnimationFrame(frame);}
+    else{rot=r0+rotFinal;desenhar(rot);setTimeout(function(){mostrar(idx);},750);}
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ── MOSTRAR RESULTADO ── */
+function mostrar(idx){
+  var f=FATIAS[idx];
+  document.getElementById("rEmoji").textContent=f.emoji;
+
+  var badge=document.getElementById("rBadge");
+  badge.textContent=f.badge;
+  badge.className="res-ganhou"+(f.ganhou?"":" amor");
+
+  document.getElementById("rPremio").textContent=f.premio;
+
+  var msg=document.getElementById("rMsg");
+  msg.textContent=f.msg;
+  msg.className="res-msg"+(f.ganhou?"":" amor");
+
+  var inst=document.getElementById("rInst");
+  inst.textContent=f.inst;
+  inst.className="res-inst"+(f.ganhou?"":" amor");
+
+  document.getElementById("tRes").style.display="block";
+  confetti(f.ganhou);
+}
+
+/* ── CONFETTI ── */
+function confetti(ganhou){
+  var cores=ganhou
+    ?["#F5C00C","#ff4d8d","#fff","#ff2244","#27ae60","#ffe066","#fff8a0"]
+    :["#ff4d8d","#cc66aa","#fff","#cc44aa"];
+  var shapes=ganhou?["❤️","💛","✨","💕","🌟","⭐"]:["❤️","💕","🌹"];
+  var qtd=ganhou?90:35;
+  for(var i=0;i<qtd;i++){
+    setTimeout(function(){
+      var el=document.createElement("div");el.className="cf";
+      if(Math.random()>.45){
+        el.style.fontSize=(11+Math.random()*13)+"px";
+        el.textContent=shapes[Math.floor(Math.random()*shapes.length)];
+      } else {
+        var w=5+Math.random()*9;
+        el.style.width=w+"px";el.style.height=w*(0.4+Math.random()*.8)+"px";
+        el.style.borderRadius=Math.random()>.5?"50%":"2px";
+        el.style.background=cores[Math.floor(Math.random()*cores.length)];
+      }
+      el.style.left=(Math.random()*108)+"vw";
+      el.style.animationDuration=(2.2+Math.random()*3.2)+"s";
+      el.style.animationDelay="0s";
+      document.body.appendChild(el);
+      setTimeout(function(e){return function(){e.parentNode&&e.parentNode.removeChild(e)}}(el),6000);
+    },Math.random()*800);
+  }
+}
+
+/* ── TOGGLE SENHA ── */
+var vendo=false;
+function toggleVer(){
+  vendo=!vendo;
+  document.getElementById("inp").type=vendo?"text":"password";
+  document.getElementById("olho").style.opacity=vendo?".9":".4";
+}
+
+/* ── EVENTOS ── */
+document.getElementById("btnLib").addEventListener("click",function(){
+  var v=document.getElementById("inp").value.toLowerCase().trim();
+  if(v===CODIGO){
+    document.getElementById("tc").style.display="none";
+    document.getElementById("tr").style.display="block";
+    desenhar(0);
+  } else {
+    document.getElementById("err").textContent="Código incorreto. Peça ao garçom! 🙈";
+    document.getElementById("inp").value="";
+    document.getElementById("inp").focus();
+  }
+});
+document.getElementById("inp").addEventListener("input",function(){document.getElementById("err").textContent=""});
+document.getElementById("inp").addEventListener("keyup",function(e){if(e.keyCode===13)document.getElementById("btnLib").click()});
+document.getElementById("btnSpin").addEventListener("click",girar);
+document.getElementById("btnFecha").addEventListener("click",function(){
+  document.getElementById("tRes").style.display="none";
+  document.getElementById("tc").style.display="block";
+  document.getElementById("inp").value="";
+  document.getElementById("err").textContent="";
+  rot=0;girando=false;lastSeg=-1;
+  document.getElementById("btnSpin").disabled=false;
+});
+</script>
+</body>
+</html>
