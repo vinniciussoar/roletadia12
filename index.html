@@ -253,6 +253,37 @@ body{
 /* ── RODAPÉ ── */
 .rod{margin-top:28px;font-size:9px;letter-spacing:2.5px;color:rgba(255,255,255,.13);text-transform:uppercase}
 
+/* ── CARDÁPIO DE PORÇÕES ── */
+.menu-sec{margin-top:28px;width:100%;animation:fadeU .7s .3s ease both}
+.menu-titulo{
+  font-family:'Playfair Display',serif;font-size:19px;color:var(--ouro);
+  text-align:center;margin-bottom:18px;letter-spacing:.5px;
+}
+.menu-item{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:11px 0;border-bottom:1px solid rgba(245,192,12,.12);
+  font-size:13px;color:rgba(255,255,255,.8);
+}
+.menu-item:last-child{border-bottom:none}
+.menu-item span:last-child{font-weight:700;color:var(--ouro);white-space:nowrap;margin-left:12px}
+.menu-acomp{
+  margin-top:16px;padding:13px 15px;
+  background:rgba(245,192,12,.06);border-radius:12px;
+  border:1px solid rgba(245,192,12,.15);
+}
+.menu-acomp-titulo{
+  font-size:10px;letter-spacing:2.5px;text-transform:uppercase;
+  color:rgba(255,255,255,.38);margin-bottom:10px;text-align:center;
+}
+.menu-acomp-item{
+  display:flex;justify-content:space-between;
+  font-size:12px;color:rgba(255,255,255,.7);padding:5px 0;
+  border-bottom:1px solid rgba(245,192,12,.08);
+}
+.menu-acomp-item:last-of-type{border-bottom:none}
+.menu-acomp-item span:last-child{color:var(--ouro);font-weight:700}
+.menu-acomp-opcoes{font-size:11px;color:rgba(255,255,255,.3);margin-top:10px;text-align:center}
+
 /* ── CONFETTI ── */
 .cf{position:fixed;top:-30px;pointer-events:none;z-index:200;animation:cfFall linear forwards}
 @keyframes cfFall{
@@ -331,6 +362,24 @@ body{
   </div>
 
   <div class="rod">@pizzarianicoleculae &nbsp;·&nbsp; (77) 9 9956-5330</div>
+
+  <!-- CARDÁPIO DE PORÇÕES -->
+  <div class="card menu-sec">
+    <div class="menu-titulo">🍽️ Porções</div>
+    <div class="menu-item"><span>Contra filé acebolado</span><span>R$ 45</span></div>
+    <div class="menu-item"><span>Carne de sol</span><span>R$ 45</span></div>
+    <div class="menu-item"><span>Torresmo</span><span>R$ 40</span></div>
+    <div class="menu-item"><span>Calabresa acebolada</span><span>R$ 26</span></div>
+    <div class="menu-item"><span>Batata frita</span><span>R$ 26</span></div>
+    <div class="menu-item"><span>Batata c/ cheddar e bacon</span><span>R$ 35</span></div>
+    <div class="menu-acomp">
+      <div class="menu-acomp-titulo">Acompanhamentos</div>
+      <div class="menu-acomp-item"><span>1 acompanhamento</span><span>R$ 5</span></div>
+      <div class="menu-acomp-item"><span>2 acompanhamentos</span><span>R$ 10</span></div>
+      <div class="menu-acomp-opcoes">Opções: aipim · batata frita</div>
+    </div>
+  </div>
+
 </div>
 
 <!-- RESULTADO (overlay tela cheia) -->
