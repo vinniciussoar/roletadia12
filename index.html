@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cardápio — Pizzaria Nicole Caculé</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@500;600;700&family=Marcellus&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 <style>
 :root {
   --bg: #120005;
@@ -35,22 +34,43 @@ body {
 }
 ::selection { background: rgba(212,160,23,0.3); color:#fff; }
 
-/* TEXTURA DE FUNDO */
+/* TEXTURA DE FUNDO — fundo vivo animado */
 body::before {
   content:'';
-  position:fixed; inset:0;
+  position:fixed; inset:-20%;
   background:
-    radial-gradient(ellipse at 15% 0%, rgba(139,0,0,0.4) 0%, transparent 55%),
-    radial-gradient(ellipse at 85% 100%, rgba(80,0,30,0.3) 0%, transparent 55%),
-    repeating-linear-gradient(
-      -45deg,
-      rgba(255,255,255,0.008) 0px,
-      rgba(255,255,255,0.008) 1px,
-      transparent 1px,
-      transparent 14px
-    );
+    radial-gradient(ellipse at 15% 0%, rgba(139,0,0,0.45) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 100%, rgba(100,0,50,0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(60,0,20,0.25) 0%, transparent 60%);
   pointer-events:none;
   z-index:0;
+  animation: bgDrift 18s ease-in-out infinite alternate;
+}
+@keyframes bgDrift {
+  0%   { transform: translate(0,0) scale(1); }
+  100% { transform: translate(2%,-2%) scale(1.06); }
+}
+/* Brilhos dourados flutuando */
+body::after {
+  content:'';
+  position:fixed; inset:0;
+  pointer-events:none;
+  z-index:0;
+  background-image:
+    radial-gradient(circle 2px at 12% 85%, rgba(245,200,66,0.5) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 28% 60%, rgba(245,200,66,0.35) 0%, transparent 100%),
+    radial-gradient(circle 2.5px at 45% 90%, rgba(245,200,66,0.4) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 65% 70%, rgba(245,200,66,0.35) 0%, transparent 100%),
+    radial-gradient(circle 2px at 82% 80%, rgba(245,200,66,0.45) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 92% 55%, rgba(245,200,66,0.3) 0%, transparent 100%);
+  animation: sparkRise 14s linear infinite;
+  opacity:0.7;
+}
+@keyframes sparkRise {
+  0%   { transform: translateY(0); opacity:0; }
+  10%  { opacity:0.7; }
+  90%  { opacity:0.7; }
+  100% { transform: translateY(-100vh); opacity:0; }
 }
 
 /* HEADER */
@@ -85,8 +105,14 @@ header {
   box-shadow: 0 0 0 5px rgba(10,0,5,1), 0 8px 40px rgba(212,160,23,0.35);
   overflow: hidden;
   flex-shrink: 0;
+
+  animation: shimmerRing 6s ease infinite, logoFloat 5s ease-in-out infinite;
 }
 .header-logo-circle img { border-radius: 50%; }
+@keyframes logoFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
 @keyframes shimmerRing {
   0%,100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -121,6 +147,22 @@ header {
   transition: opacity .2s;
 }
 .header-insta:active { opacity: 0.6; }
+.header-google {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 16px;
+  background: linear-gradient(135deg, rgba(212,160,23,0.15), rgba(212,160,23,0.06));
+  border: 1px solid rgba(212,160,23,0.35);
+  border-radius: 50px;
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dourado-claro);
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: all .2s;
+}
+.header-google:active { transform: scale(0.96); opacity: 0.8; }
 
 .gold-divider {
   height: 1px;
@@ -162,8 +204,14 @@ header {
   box-shadow: 0 0 0 5px rgba(10,0,5,1), 0 8px 40px rgba(212,160,23,0.35);
   overflow: hidden;
   flex-shrink: 0;
+
+  animation: shimmerRing 6s ease infinite, logoFloat 5s ease-in-out infinite;
 }
 .header-logo-circle img { border-radius: 50%; }
+@keyframes logoFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
 @keyframes shimmerRing {
   0%,100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -198,6 +246,22 @@ header {
   transition: opacity .2s;
 }
 .header-insta:active { opacity: 0.6; }
+.header-google {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 6px 16px;
+  background: linear-gradient(135deg, rgba(212,160,23,0.15), rgba(212,160,23,0.06));
+  border: 1px solid rgba(212,160,23,0.35);
+  border-radius: 50px;
+  font-family: 'Lato', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dourado-claro);
+  text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: all .2s;
+}
+.header-google:active { transform: scale(0.96); opacity: 0.8; }
 
 .gold-divider {
   height: 1px;
@@ -295,7 +359,7 @@ header {
 .search-inner input:focus { box-shadow:0 0 0 3px rgba(212,160,23,0.1); }
 .search-inner input::placeholder { color:rgba(245,237,224,0.35); }
 .search-inner input:focus { border-color:var(--dourado); }
-.search-inner i { position:absolute; right:16px; top:50%; transform:translateY(-50%); color:var(--dourado); font-size:14px; }
+.search-inner .search-icon { position:absolute; right:18px; top:50%; transform:translateY(-50%); opacity:0.7; pointer-events:none; }
 
 /* TABS */
 nav#cats {
@@ -319,9 +383,15 @@ nav#cats button {
   cursor:pointer; letter-spacing:1px; transition:all .25s;
 }
 nav#cats button.active, nav#cats button:hover {
-  background: linear-gradient(135deg, var(--dourado), #a07010);
+  background: linear-gradient(120deg, #f5c842, #C9920A, #f5c842);
+  background-size: 200% auto;
+  animation: tabGlow 3s linear infinite;
   border-color:var(--dourado); color:#1a0000;
-  box-shadow: 0 4px 15px rgba(212,160,23,0.3);
+  box-shadow: 0 4px 18px rgba(212,160,23,0.4);
+}
+@keyframes tabGlow {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
 }
 
 /* PROMO PIZZA */
@@ -331,7 +401,7 @@ nav#cats button.active, nav#cats button:hover {
   border:2px solid var(--dourado-claro); border-radius:20px; padding:18px;
   position:relative; overflow:hidden;
   box-shadow: 0 8px 32px rgba(139,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
-}
+ animation: promoGlow 4s ease-in-out infinite; }
 .promo-inner::before {
   content:'';
   position:absolute; top:-40px; right:-40px;
@@ -359,7 +429,7 @@ nav#cats button.active, nav#cats button:hover {
   margin-bottom:8px;
 }
 .promo-preco-label { font-size:11px; color:var(--texto-suave); }
-.promo-preco-val { font-family:'Cinzel',serif; font-size:24px; color:var(--dourado-claro); font-weight:700; }
+.promo-preco-val { font-family:'Cinzel',serif; font-size:24px; color:var(--dourado-claro); font-weight:700;  animation: pricePulse 2.4s ease-in-out infinite; display:inline-block; }
 .promo-borda { font-size:11px; color:#7dde7d; font-weight:700; }
 .promo-obs { font-size:10px; color:var(--texto-suave); margin-top:6px; text-align:center; }
 
@@ -368,15 +438,30 @@ nav#cats button.active, nav#cats button:hover {
 main { max-width:520px; margin:0 auto; padding:0 16px; position:relative; z-index:1; }
 .section-title {
   font-family:'Cinzel',serif; font-size:13px; letter-spacing:3px;
-  text-transform:uppercase; color:var(--dourado-claro);
+  text-transform:uppercase;
+  background: linear-gradient(90deg, #C9920A 0%, #f5c842 25%, #fff5d6 50%, #f5c842 75%, #C9920A 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShimmer 5s linear infinite;
   padding-bottom:10px; margin:28px 0 16px;
   display:flex; align-items:center; gap:12px;
-  position:relative; font-weight:600;
+  position:relative; font-weight:700;
+}
+@keyframes goldShimmer {
+  0% { background-position: 200% center; }
+  100% { background-position: -200% center; }
 }
 .section-title::before {
-  content:''; width:14px; height:14px; flex-shrink:0;
-  background:radial-gradient(circle, var(--dourado) 30%, transparent 60%);
-  opacity:0.6;
+  content:''; width:10px; height:10px; flex-shrink:0;
+  border-radius:50%;
+  background: radial-gradient(circle, #f5c842 20%, #C9920A 60%, transparent 80%);
+  animation: dotPulse 2.2s ease-in-out infinite;
+}
+@keyframes dotPulse {
+  0%,100% { transform:scale(1); opacity:0.7; }
+  50% { transform:scale(1.35); opacity:1; }
 }
 .section-title::after {
   content:''; flex:1; height:1px;
@@ -385,10 +470,13 @@ main { max-width:520px; margin:0 auto; padding:0 16px; position:relative; z-inde
 
 /* PIZZA CARD */
 .pizza-card {
-  background:var(--card-bg); border:1px solid var(--card-border);
-  border-radius:12px; padding:12px 14px; margin-bottom:8px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.018) 100%);
+  border:1px solid var(--card-border);
+  border-radius:18px; padding:14px 16px; margin-bottom:9px;
   display:flex; align-items:flex-start; justify-content:space-between;
-  gap:12px; transition:border-color .15s;
+  gap:12px;
+  transition: border-color .3s cubic-bezier(0.22,1,0.36,1), transform .25s cubic-bezier(0.22,1,0.36,1), box-shadow .3s cubic-bezier(0.22,1,0.36,1);
+  position:relative; overflow:hidden;
 }
 .pizza-card:hover { border-color:rgba(212,160,23,0.4); }
 .pizza-left { flex:1; min-width:0; }
@@ -399,17 +487,18 @@ main { max-width:520px; margin:0 auto; padding:0 16px; position:relative; z-inde
 .price-row { display:flex; align-items:center; gap:5px; }
 .size-label { font-size:9px; font-weight:700; color:rgba(212,160,23,0.6); letter-spacing:1px; }
 .price-val { font-family:'Cinzel',serif; font-size:13px; color:var(--dourado-claro); font-weight:700; }
-.price-val.grande { font-size:16px; }
+.price-val.grande { font-size:18px; color:#fff; text-shadow:0 0 12px rgba(245,200,66,0.35); }
 
 /* GRID */
 .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:4px; }
 .mini-card {
-  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%);
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.018) 100%);
   border:1px solid var(--card-border);
-  border-radius:14px; padding:12px 14px;
-  transition: border-color .2s, transform .15s, box-shadow .2s;
+  border-radius:16px; padding:12px 14px;
+  transition: border-color .3s cubic-bezier(0.22,1,0.36,1), transform .25s cubic-bezier(0.22,1,0.36,1), box-shadow .3s cubic-bezier(0.22,1,0.36,1);
   position:relative;
 }
+.mini-card:active { transform: scale(0.97); }
 .mini-card:hover {
   border-color:var(--card-hover);
   transform:translateY(-2px);
@@ -444,7 +533,8 @@ main { max-width:520px; margin:0 auto; padding:0 16px; position:relative; z-inde
   display:flex; align-items:center; justify-content:space-between; gap:8px;
   transition: border-color .2s, transform .15s;
 }
-.beb-card:hover { border-color:var(--card-hover); transform:translateX(2px); }
+.beb-card:hover { border-color:var(--card-hover); transform:translateX(3px); }
+.beb-card:active { transform: scale(0.97); }
 .beb-name { font-family:'Marcellus',serif; font-size:13px; font-weight:400; color:var(--texto); line-height:1.3; flex:1; }
 .beb-price {
   font-family:'Cinzel',serif; font-size:13px;
@@ -463,8 +553,82 @@ main { max-width:520px; margin:0 auto; padding:0 16px; position:relative; z-inde
 }
 
 
-@keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-#conteudo > * { animation: fadeUp .4s ease both; }
+/* BANNER AMSTEL */
+.amstel-banner {
+  margin-top: 12px;
+}
+.amstel-inner {
+  background: linear-gradient(135deg, #2a1800 0%, #4a2c00 45%, #1a0e00 100%);
+  border: 2px solid #f5c842;
+  border-radius: 20px;
+  padding: 18px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  animation: promoGlow 4s ease-in-out infinite;
+}
+.amstel-inner::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -80%;
+  width: 50%; height: 100%;
+  background: linear-gradient(105deg, transparent 0%, rgba(255,235,180,0.12) 50%, transparent 100%);
+  animation: amstelShine 4.5s ease-in-out infinite;
+}
+@keyframes amstelShine {
+  0%, 60% { left: -80%; }
+  100% { left: 130%; }
+}
+.amstel-emoji {
+  font-size: 44px;
+  flex-shrink: 0;
+  animation: beerCheer 2.8s ease-in-out infinite;
+  filter: drop-shadow(0 4px 10px rgba(245,200,66,0.35));
+}
+@keyframes beerCheer {
+  0%, 100% { transform: rotate(-6deg) translateY(0); }
+  50% { transform: rotate(8deg) translateY(-4px); }
+}
+.amstel-txt { flex: 1; position: relative; z-index: 1; }
+.amstel-titulo {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #f5c842;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+}
+.amstel-frase {
+  font-family: 'Marcellus', serif;
+  font-size: 14px;
+  color: #fff;
+  line-height: 1.5;
+}
+.amstel-frase strong { color: #f5c842; }
+.amstel-obs {
+  font-size: 10px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 5px;
+  letter-spacing: 0.5px;
+}
+
+/* Scroll reveal — Intersection Observer */
+.reveal {
+  opacity:0;
+  transform: translateY(20px) scale(0.98);
+  transition:
+    opacity .6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform .6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.in { opacity:1; transform: translateY(0) scale(1); }
+@keyframes pricePulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.05); } }
+@keyframes promoGlow {
+  0%,100% { box-shadow: 0 8px 32px rgba(139,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05); }
+  50% { box-shadow: 0 8px 44px rgba(212,160,23,0.35), inset 0 1px 0 rgba(255,255,255,0.08); }
+}
+@keyframes fireFlicker { 0%,100% { transform:scale(1) rotate(-2deg); } 50% { transform:scale(1.15) rotate(2deg); } }
 .fatias-note {
   background:rgba(212,160,23,0.08);
   border:1px solid rgba(212,160,23,0.2);
@@ -507,87 +671,16 @@ main { max-width:520px; margin:0 auto; padding:0 16px; position:relative; z-inde
   transition:all .2s;
   white-space:nowrap;
   display:none;
+
+  animation: btnBreath 3s ease-in-out infinite;
+}
+@keyframes btnBreath {
+  0%,100% { box-shadow: 0 6px 24px rgba(139,0,0,0.5); }
+  50% { box-shadow: 0 6px 34px rgba(245,200,66,0.45); }
 }
 .btn-bebidas:hover { transform:translateX(-50%) scale(1.05); border-color:var(--dourado-claro); }
 .btn-bebidas.visible { display:block; }
 
-/* AVALIAÇÃO */
-.aval-section {
-  max-width: 520px;
-  margin: 30px auto 0;
-  padding: 0 16px;
-}
-.aval-box {
-  background: linear-gradient(135deg, rgba(212,160,23,0.1), rgba(139,0,0,0.15));
-  border: 1px solid rgba(212,160,23,0.3);
-  border-radius: 20px;
-  padding: 22px 20px;
-  text-align: center;
-}
-.aval-titulo {
-  font-family: 'Cinzel', serif;
-  font-size: 15px;
-  color: var(--dourado-claro);
-  letter-spacing: 1px;
-  margin-bottom: 4px;
-}
-.aval-sub {
-  font-size: 12px;
-  color: var(--texto-suave);
-  margin-bottom: 16px;
-}
-.aval-estrelas {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-.aval-estrela {
-  font-size: 36px;
-  cursor: pointer;
-  filter: grayscale(1) opacity(0.4);
-  transition: transform .15s, filter .15s;
-  -webkit-tap-highlight-color: transparent;
-}
-.aval-estrela:active { transform: scale(1.2); }
-.aval-estrela.ativa { filter: grayscale(0) opacity(1); transform: scale(1.1); }
-.aval-comentario {
-  width: 100%;
-  background: rgba(0,0,0,0.3);
-  border: 1px solid rgba(212,160,23,0.2);
-  border-radius: 12px;
-  padding: 12px 14px;
-  font-family: 'Lato', sans-serif;
-  font-size: 13px;
-  color: var(--texto);
-  outline: none;
-  resize: none;
-  margin-bottom: 12px;
-  display: none;
-}
-.aval-comentario:focus { border-color: var(--dourado); }
-.aval-btn {
-  width: 100%;
-  background: linear-gradient(120deg, #8B0000, #5a0000);
-  border: 2px solid var(--dourado);
-  border-radius: 50px;
-  padding: 13px;
-  font-family: 'Lato', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--dourado-claro);
-  cursor: pointer;
-  letter-spacing: 1px;
-  display: none;
-  -webkit-tap-highlight-color: transparent;
-}
-.aval-msg {
-  font-size: 13px;
-  color: var(--dourado-claro);
-  margin-top: 10px;
-  line-height: 1.6;
-  display: none;
-}
 
 footer {
   max-width: 520px;
@@ -639,6 +732,29 @@ footer {
   color: rgba(245,237,224,0.3);
   font-style: italic;
 }
+
+/* Touch: hover não gruda */
+@media (hover: none) {
+  .pizza-card:hover { transform:none; box-shadow:none; border-color:var(--card-border); }
+  .pizza-card:hover::before { opacity:0; }
+  .mini-card:hover { transform:none; box-shadow:none; border-color:var(--card-border); }
+  .beb-card:hover { transform:none; border-color:var(--card-border); }
+  nav#cats button:hover:not(.active) {
+    background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    animation:none; border-color:rgba(212,160,23,0.2);
+    color:rgba(212,160,23,0.7); box-shadow:none;
+  }
+}
+
+/* Acessibilidade: respeitar redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal { opacity:1; transform:none; }
+}
 </style>
 </head>
 <body>
@@ -652,7 +768,8 @@ footer {
     </div>
     <div class="header-text-side">
       <p class="header-anos">✦ Pizzaria & Esfiharia Nicole Caculé</p>
-      <a class="header-insta" href="https://www.instagram.com/pizzaria.nicolecacule?igsh=MmhrcHJ5M3FoOWdr" target="_blank">📸 @pizzaria.nicolecacule</a>
+      <a class="header-insta" href="https://www.instagram.com/pizzaria.nicolecacule?igsh=MmhrcHJ5M3FoOWdr" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:5px"><defs><radialGradient id="ig" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="5%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ig)"/><circle cx="12" cy="12" r="4.5" stroke="white" stroke-width="1.8" fill="none"/><circle cx="17.5" cy="6.5" r="1.2" fill="white"/></svg>@pizzaria.nicolecacule</a>
+      <a class="header-google" href="https://g.page/r/CZl7czEfEHepEAE/review" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:5px"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.83z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.83c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/></svg>Avalie no Google</a>
     </div>
 
   </div>
@@ -674,7 +791,7 @@ footer {
 <div class="search-wrap">
   <div class="search-inner">
     <input type="text" id="busca" placeholder="Buscar no cardápio…">
-    <i class="fa-solid fa-magnifying-glass"></i>
+    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C9920A" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
   </div>
 </div>
 
@@ -684,28 +801,11 @@ footer {
 
 <main id="conteudo"></main>
 
-<div class="aval-section">
-  <div class="aval-box">
-    <div class="aval-titulo">⭐ Avalie sua experiência</div>
-    <div class="aval-sub">Sua opinião faz a Nicole melhor a cada dia!</div>
-    <div class="aval-estrelas" id="avalEstrelas">
-      <span class="aval-estrela" data-v="1">⭐</span>
-      <span class="aval-estrela" data-v="2">⭐</span>
-      <span class="aval-estrela" data-v="3">⭐</span>
-      <span class="aval-estrela" data-v="4">⭐</span>
-      <span class="aval-estrela" data-v="5">⭐</span>
-    </div>
-    <textarea class="aval-comentario" id="avalComentario" rows="3" placeholder="Conte como foi (opcional)..."></textarea>
-    <button class="aval-btn" id="avalBtn">Enviar Avaliação</button>
-    <div class="aval-msg" id="avalMsg"></div>
-  </div>
-</div>
-
 <footer>
   <div class="footer-logo-line">Pizzaria & Esfiharia <strong>Nicole</strong> · Caculé</div>
   <div class="footer-info">📍 Av. Manuel Caculé, 203 — Caculé/BA</div>
   <div class="footer-info">📱 (77) 9 8106-5139</div>
-  <a class="footer-insta" href="https://www.instagram.com/pizzaria.nicolecacule?igsh=MmhrcHJ5M3FoOWdr" target="_blank">📸 @pizzaria.nicolecacule</a>
+  <a class="footer-insta" href="https://www.instagram.com/pizzaria.nicolecacule?igsh=MmhrcHJ5M3FoOWdr" target="_blank"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="vertical-align:middle;margin-right:5px"><defs><radialGradient id="ig" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="5%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect x="2" y="2" width="20" height="20" rx="6" fill="url(#ig)"/><circle cx="12" cy="12" r="4.5" stroke="white" stroke-width="1.8" fill="none"/><circle cx="17.5" cy="6.5" r="1.2" fill="white"/></svg>@pizzaria.nicolecacule</a>
   <div class="footer-disc">Preços sujeitos a alteração sem aviso prévio.</div>
 </footer>
 
@@ -713,39 +813,40 @@ footer {
 const MENU = [
   // PIZZAS SALGADAS
   {cat:"Pizzas Salgadas",num:"01",name:"À Moda",desc:"Presunto, ovo, ervilha, bacon e mussarela.",M:"35,00",G:"50,00"},
-  {cat:"Pizzas Salgadas",num:"02",name:"À Moda do Cliente",desc:"Cinco ingredientes à sua escolha.",M:"35,00",G:"60,00"},
-  {cat:"Pizzas Salgadas",num:"03",name:"À Moda do Pizzaiolo",desc:"Atum, presunto, bacon, ovo e mussarela.",M:"35,00",G:"60,00"},
+  {cat:"Pizzas Salgadas",num:"02",name:"À Moda do Cliente",desc:"Cinco ingredientes à sua escolha.",M:"37,00",G:"60,00"},
+  {cat:"Pizzas Salgadas",num:"03",name:"À Moda do Pizzaiolo",desc:"Atum, presunto, bacon, ovo e mussarela.",M:"37,00",G:"60,00"},
   {cat:"Pizzas Salgadas",num:"04",name:"Alho",desc:"Mussarela e alho.",M:"35,00",G:"50,00"},
   {cat:"Pizzas Salgadas",num:"05",name:"Americana",desc:"Presunto, palmito, mussarela e catupiry.",M:"35,00",G:"50,00"},
-  {cat:"Pizzas Salgadas",num:"06",name:"Atum",desc:"Atum e cebola.",M:"35,00",G:"60,00"},
-  {cat:"Pizzas Salgadas",num:"07",name:"Lagoa Caculé",desc:"Atum, cebola e mussarela.",M:"35,00",G:"60,00"},
+  {cat:"Pizzas Salgadas",num:"06",name:"Atum",desc:"Atum e cebola.",M:"37,00",G:"60,00"},
+  {cat:"Pizzas Salgadas",num:"07",name:"Lagoa Caculé",desc:"Atum, cebola e mussarela.",M:"37,00",G:"60,00"},
   {cat:"Pizzas Salgadas",num:"08",name:"Bacon",desc:"Bacon e mussarela.",M:"35,00",G:"50,00"},
   {cat:"Pizzas Salgadas",num:"09",name:"Baiana",desc:"Calabresa fatiada, ovo, cebola e pimenta.",M:"35,00",G:"50,00"},
   {cat:"Pizzas Salgadas",num:"10",name:"Bauru",desc:"Presunto, mussarela e tomate.",M:"35,00",G:"50,00"},
   {cat:"Pizzas Salgadas",num:"11",name:"Brasileira",desc:"Calabresa moída, ovo, cebola e mussarela.",M:"35,00",G:"50,00"},
-  {cat:"Pizzas Salgadas",num:"12",name:"Brócolis",desc:"Brócolis, palmito, bacon e mussarela.",M:"35,00",G:"50,00"},
+  {cat:"Pizzas Salgadas",num:"12",name:"Brócolis",desc:"Brócolis com toque de tempero, palmito, bacon e mussarela.",M:"35,00",G:"50,00"},
   {cat:"Pizzas Salgadas",num:"13",name:"Caipira",desc:"Frango, catupiry e milho.",M:"35,00",G:"50,00"},
   {cat:"Pizzas Salgadas",num:"14",name:"Calabresa Barbecue",desc:"Calabresa, cebola roxa, bacon e barbecue.",M:"35,00",G:"52,00"},
   {cat:"Pizzas Salgadas",num:"15",name:"Calabresa",desc:"Calabresa e cebola.",M:"35,00",G:"45,00"},
   {cat:"Pizzas Salgadas",num:"16",name:"Camarão",desc:"Mussarela, camarão, cebolinha e pimenta biquinho.",M:"40,00",G:"80,00"},
   {cat:"Pizzas Salgadas",num:"17",name:"Carioca",desc:"Presunto, frango, bacon e mussarela.",M:"35,00",G:"51,00"},
   {cat:"Pizzas Salgadas",num:"18",name:"Cinco Queijos",desc:"Mussarela, catupiry, parmesão, provolone e cheddar.",M:"35,00",G:"51,00"},
-  {cat:"Pizzas Salgadas",num:"19",name:"Contra Filé",desc:"Contra filé em tiras, mussarela, bacon e cebola roxa.",M:"35,00",G:"60,00"},
+  {cat:"Pizzas Salgadas",num:"19",name:"Contra Filé",desc:"Contra filé em tiras, mussarela, bacon e cebola roxa.",M:"37,00",G:"60,00"},
   {cat:"Pizzas Salgadas",num:"20",name:"Corinthiana",desc:"Calabresa, frango, bacon, milho e mussarela.",M:"35,00",G:"51,00"},
-  {cat:"Pizzas Salgadas",num:"21",name:"Costela",desc:"Costela desfiada, cebola roxa, catupiry e mussarela.",M:"35,00",G:"60,00"},
-  {cat:"Pizzas Salgadas",num:"22",name:"Costela Especial",desc:"Costela desfiada, mussarela, cream cheese, pimentão e cebolinha.",M:"35,00",G:"65,00"},
+  {cat:"Pizzas Salgadas",num:"21",name:"Costela",desc:"Costela desfiada, cebola roxa, catupiry e mussarela.",M:"37,00",G:"60,00"},
+  {cat:"Pizzas Salgadas",num:"22",name:"Costela Especial",desc:"Costela desfiada, mussarela, cream cheese, pimentão e cebolinha.",M:"37,00",G:"65,00"},
   {cat:"Pizzas Salgadas",num:"23",name:"Dinápole",desc:"Lombo, bacon, cebola, mussarela e tomate.",M:"35,00",G:"55,00"},
   {cat:"Pizzas Salgadas",num:"24",name:"Dois Queijos",desc:"Mussarela e catupiry.",M:"35,00",G:"50,00"},
   {cat:"Pizzas Salgadas",num:"25",name:"Doritos",desc:"Mussarela, catupiry e Doritos.",M:"35,00",G:"52,00"},
+  {cat:"Pizzas Salgadas",num:"26",name:"Escarola",desc:"Escarola com toque de tempero, bacon e mussarela.",M:"35,00",G:"50,00"},
   {cat:"Pizzas Salgadas",num:"27",name:"Fortaleza",desc:"Frango, ovo, milho e cheddar.",M:"35,00",G:"50,00"},
-  {cat:"Pizzas Salgadas",num:"28",name:"Carne Seca",desc:"Carne seca, mussarela ou catupiry e cebola.",M:"35,00",G:"60,00"},
+  {cat:"Pizzas Salgadas",num:"28",name:"Carne Seca",desc:"Carne seca, mussarela ou catupiry e cebola.",M:"37,00",G:"60,00"},
   {cat:"Pizzas Salgadas",num:"29",name:"Francesa",desc:"Presunto, ovo, mussarela e catupiry.",M:"35,00",G:"51,00"},
   {cat:"Pizzas Salgadas",num:"30",name:"Frango Barbecue",desc:"Frango, mussarela, bacon e barbecue.",M:"35,00",G:"52,00"},
-  {cat:"Pizzas Salgadas",num:"31",name:"Frango c/ Catupiry",desc:"Frango desfiado com tempero especial e catupiry.",M:"35,00",G:"50,00"},
+  {cat:"Pizzas Salgadas",num:"31",name:"Frango com Catupiry",desc:"Frango desfiado com tempero especial e catupiry.",M:"35,00",G:"50,00"},
   {cat:"Pizzas Salgadas",num:"32",name:"Lombo Especial",desc:"Lombo, cebola, palmito e mussarela.",M:"35,00",G:"51,00"},
   {cat:"Pizzas Salgadas",num:"33",name:"Mafiosa",desc:"Calabresa, bacon, cebola e catupiry.",M:"35,00",G:"51,00"},
   {cat:"Pizzas Salgadas",num:"34",name:"Marguerita",desc:"Mussarela, tomate e manjericão.",M:"35,00",G:"50,00"},
-  {cat:"Pizzas Salgadas",num:"35",name:"Flamenguista",desc:"Carne seca, mussarela, pimentão, pimenta biquinho e cebolinha.",M:"35,00",G:"60,00"},
+  {cat:"Pizzas Salgadas",num:"35",name:"Flamenguista",desc:"Carne seca, mussarela, pimentão, pimenta biquinho e cebolinha.",M:"37,00",G:"60,00"},
   {cat:"Pizzas Salgadas",num:"36",name:"Milho Verde",desc:"Milho verde e mussarela.",M:"35,00",G:"45,00"},
   {cat:"Pizzas Salgadas",num:"37",name:"Mussarela",desc:"Mussarela com rodelas de tomate.",M:"35,00",G:"46,00"},
   {cat:"Pizzas Salgadas",num:"38",name:"Napolitana",desc:"Mussarela, tomate, parmesão e manjericão.",M:"35,00",G:"51,00"},
@@ -755,33 +856,33 @@ const MENU = [
   {cat:"Pizzas Salgadas",num:"42",name:"Paulista",desc:"Calabresa, cebola e mussarela.",M:"35,00",G:"50,00"},
   {cat:"Pizzas Salgadas",num:"43",name:"Caculé",desc:"Calabresa, cebola e catupiry.",M:"35,00",G:"50,00"},
   {cat:"Pizzas Salgadas",num:"44",name:"Peito de Peru",desc:"Peito de peru, bacon, mussarela, palmito e cebola.",M:"35,00",G:"54,00"},
-  {cat:"Pizzas Salgadas",num:"45",name:"Peito de Peru c/ Cream Cheese",desc:"Peito de peru, mussarela e cream cheese.",M:"35,00",G:"54,00"},
+  {cat:"Pizzas Salgadas",num:"45",name:"Peito de Peru com Cream Cheese",desc:"Peito de peru, mussarela e cream cheese.",M:"35,00",G:"54,00"},
   {cat:"Pizzas Salgadas",num:"46",name:"Pepperoni",desc:"Pepperoni, mussarela, champignon e pimentão.",M:"35,00",G:"54,00"},
   {cat:"Pizzas Salgadas",num:"47",name:"Portuguesa",desc:"Presunto, palmito, ervilha, milho, ovo e mussarela.",M:"35,00",G:"51,00"},
   {cat:"Pizzas Salgadas",num:"48",name:"Quatro Queijos",desc:"Provolone, parmesão, catupiry e mussarela.",M:"35,00",G:"54,00"},
   {cat:"Pizzas Salgadas",num:"49",name:"Rosbife",desc:"Rosbife, bacon, mussarela, cebola e alho frito.",M:"35,00",G:"52,00"},
   {cat:"Pizzas Salgadas",num:"50",name:"Rúcula",desc:"Rúcula, mussarela de búfala e tomate seco.",M:"35,00",G:"50,00"},
-  {cat:"Pizzas Salgadas",num:"51",name:"Santista",desc:"Atum, palmito, cebola e catupiry.",M:"35,00",G:"60,00"},
+  {cat:"Pizzas Salgadas",num:"51",name:"Santista",desc:"Atum, palmito, cebola e catupiry.",M:"37,00",G:"60,00"},
   {cat:"Pizzas Salgadas",num:"52",name:"São Paulina",desc:"Calabresa, frango, ovo, tomate e mussarela.",M:"35,00",G:"51,00"},
   {cat:"Pizzas Salgadas",num:"53",name:"Strogonoff (Carne ou Frango)",desc:"Creme de leite, bacon, mussarela e batata palha.",M:"35,00",G:"55,00"},
-  {cat:"Pizzas Salgadas",num:"54",name:"Sushi",desc:"Atum, cream cheese, cebolinha e molho tarê.",M:"35,00",G:"60,00"},
+  {cat:"Pizzas Salgadas",num:"54",name:"Sushi",desc:"Atum, cebolinha, cream cheese e molho tarê.",M:"37,00",G:"60,00"},
   // PIZZAS DOCES
   {cat:"Pizzas Doces",num:"01",name:"Banana",desc:"Banana, mussarela, canela e leite condensado.",M:"35,00",G:"50,00"},
-  {cat:"Pizzas Doces",num:"02",name:"Chocolate",desc:"Chocolate e granulado. Borda de chocolate grátis.",M:"35,00",G:"50,00"},
+  {cat:"Pizzas Doces",num:"02",name:"Chocolate",desc:"Chocolate, granulado e borda grátis de chocolate.",M:"35,00",G:"50,00"},
   {cat:"Pizzas Doces",num:"03",name:"Chocolate com Banana",desc:"Chocolate e banana.",M:"35,00",G:"50,00"},
   {cat:"Pizzas Doces",num:"04",name:"Prestígio",desc:"Chocolate, coco ralado e leite condensado.",M:"35,00",G:"50,00"},
   {cat:"Pizzas Doces",num:"05",name:"Romeu e Julieta",desc:"Goiabada e mussarela.",M:"35,00",G:"47,00"},
-  {cat:"Pizzas Doces",num:"06",name:"Chocolate c/ Morango",desc:"Chocolate coberto com morango.",M:"35,00",G:"50,00"},
-  {cat:"Pizzas Doces",num:"07",name:"Ouro Branco",desc:"Ouro Branco com chocolate ao leite.",M:"35,00",G:"52,00"},
+  {cat:"Pizzas Doces",num:"06",name:"Chocolate com Morango",desc:"Chocolate coberto com morango.",M:"35,00",G:"50,00"},
+  {cat:"Pizzas Doces",num:"07",name:"Ouro Branco",desc:"Ouro Branco com chocolate ao leite.",M:"35,00",G:"50,00"},
   {cat:"Pizzas Doces",num:"08",name:"Sonho de Valsa",desc:"Sonho de Valsa com chocolate ao leite.",M:"35,00",G:"52,00"},
-  {cat:"Pizzas Doces",num:"09",name:"Chocolate c/ Cereja",desc:"Chocolate ao leite com cereja.",M:"35,00",G:"52,00"},
-  {cat:"Pizzas Doces",num:"10",name:"Chocolate c/ Uva",desc:"Chocolate ao leite com uva.",M:"35,00",G:"52,00"},
-  {cat:"Pizzas Doces",num:"11",name:"Nutella",desc:"Nutella.",M:"35,00",G:"60,00"},
-  {cat:"Pizzas Doces",num:"12",name:"Nutella Especial",desc:"Nutella com leite ninho, morango ou uva.",M:"35,00",G:"60,00"},
+  {cat:"Pizzas Doces",num:"09",name:"Chocolate com Cereja",desc:"Chocolate ao leite com cereja.",M:"35,00",G:"52,00"},
+  {cat:"Pizzas Doces",num:"10",name:"Chocolate com Uva",desc:"Chocolate ao leite com uva.",M:"35,00",G:"52,00"},
+  {cat:"Pizzas Doces",num:"11",name:"Nutella",desc:"Nutella.",M:"37,00",G:"60,00"},
+  {cat:"Pizzas Doces",num:"12",name:"Nutella Especial",desc:"Nutella com leite ninho, morango ou uva.",M:"37,00",G:"65,00"},
   {cat:"Pizzas Doces",num:"13",name:"Churros",desc:"Doce de leite, canela e açúcar cristal.",M:"35,00",G:"55,00"},
   {cat:"Pizzas Doces",num:"14",name:"Paçoca",desc:"Paçoca com chocolate ao leite e leite condensado.",M:"35,00",G:"55,00"},
   {cat:"Pizzas Doces",num:"15",name:"Casadinho",desc:"Chocolate ao leite e chocolate branco.",M:"35,00",G:"52,00"},
-  {cat:"Pizzas Doces",num:"16",name:"Fondue",desc:"Chocolate ao leite, uva, morango e chocolate branco.",M:"35,00",G:"60,00"},
+  {cat:"Pizzas Doces",num:"16",name:"Fondue",desc:"Chocolate ao leite, uva, morango e chocolate branco.",M:"37,00",G:"60,00"},
   {cat:"Pizzas Doces",num:"17",name:"Charge",desc:"Doce de leite, chocolate ao leite e amendoim.",M:"35,00",G:"55,00"},
   {cat:"Pizzas Doces",num:"18",name:"Cookie",desc:"Chocolate ao leite e cookies.",M:"35,00",G:"55,00"},
   {cat:"Pizzas Doces",num:"19",name:"Oreo",desc:"Chocolate ao leite e Oreo.",M:"35,00",G:"55,00"},
@@ -792,50 +893,51 @@ const MENU = [
   {cat:"Pizzas Doces",num:"24",name:"Kit Kat",desc:"Chocolate ao leite e biscoito Kit Kat.",M:"35,00",G:"55,00"},
   {cat:"Pizzas Doces",num:"25",name:"M&M",desc:"Chocolate ao leite com M&M.",M:"35,00",G:"55,00"},
   // ESFIHAS SALGADAS
-  {cat:"Esfihas Salgadas",name:"Atum",price:"4,50"},
+  {cat:"Esfihas Salgadas",name:"Atum",price:"5,00"},
   {cat:"Esfihas Salgadas",name:"Arruela",price:"5,00"},
-  {cat:"Esfihas Salgadas",name:"Bacon c/ mussarela",price:"3,50"},
-  {cat:"Esfihas Salgadas",name:"Bauru",price:"3,80"},
-  {cat:"Esfihas Salgadas",name:"Baiana",price:"3,80"},
-  {cat:"Esfihas Salgadas",name:"Brócolis, bacon e mussarela",price:"4,00"},
-  {cat:"Esfihas Salgadas",name:"Calabresa moída c/ tomate e cebola",price:"4,00"},
-  {cat:"Esfihas Salgadas",name:"Calabresa moída c/ catupiry",price:"4,00"},
-  {cat:"Esfihas Salgadas",name:"Carne c/ tempero, tomate e cebola",price:"3,50"},
-  {cat:"Esfihas Salgadas",name:"Carne c/ catupiry",price:"3,70"},
-  {cat:"Esfihas Salgadas",name:"Carne c/ cheddar original",price:"3,70"},
-  {cat:"Esfihas Salgadas",name:"Carne c/ mussarela",price:"3,70"},
-  {cat:"Esfihas Salgadas",name:"Carne seca c/ catupiry",price:"4,00"},
-  {cat:"Esfihas Salgadas",name:"Carne seca c/ cheddar",price:"4,00"},
-  {cat:"Esfihas Salgadas",name:"Carne seca c/ mussarela",price:"4,00"},
-  {cat:"Esfihas Salgadas",name:"Dois queijo",price:"4,00"},
-  {cat:"Esfihas Salgadas",name:"Frango c/ catupiry",price:"4,00"},
-  {cat:"Esfihas Salgadas",name:"Frango c/ catupiry e milho",price:"4,50"},
-  {cat:"Esfihas Salgadas",name:"Mussarela",price:"3,90"},
-  {cat:"Esfihas Salgadas",name:"Palmito c/ catupiry",price:"4,00"},
-  {cat:"Esfihas Salgadas",name:"Pizza (mussarela, tomate e orégano)",price:"4,00"},
-  {cat:"Esfihas Salgadas",name:"Presunto c/ mussarela ou catupiry",price:"3,90"},
-  {cat:"Esfihas Salgadas",name:"Portuguesa",price:"4,00"},
-  {cat:"Esfihas Salgadas",name:"Quatro queijo",price:"4,20"},
-  {cat:"Esfihas Salgadas",name:"Queijo frescal",price:"3,90"},
-  {cat:"Esfihas Salgadas",name:"Toscana",price:"4,00"},
-  {cat:"Esfihas Salgadas",name:"Alho frito",price:"3,90"},
-  {cat:"Esfihas Salgadas",name:"Peperone e mussarela",price:"4,00"},
-  {cat:"Esfihas Salgadas",name:"Costela desfiada c/ cebola roxa e catupiry",price:"4,50"},
+  {cat:"Esfihas Salgadas",name:"Bacon c/ mussarela",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Bauru",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Baiana",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Brócolis, bacon e mussarela",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Calabresa moída com tomate e cebola",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Calabresa moída com catupiry",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Carne c/ tempero especial, tomate e cebola",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Carne com catupiry",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Carne com cheddar original",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Carne com mussarela",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Carne seca com catupiry",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Carne seca com cheddar original",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Carne seca com mussarela",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Dois queijos",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Escarola com mussarela e bacon",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Frango desfiado com catupiry",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Frango desfiado com catupiry e milho",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Mussarela",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Palmito com catupiry",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Pizza (mussarela, tomate e orégano)",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Presunto c/ mussarela ou catupiry",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Portuguesa (ovo, cebola, mussarela e presunto)",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Quatro queijos",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Queijo frescal",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Toscana (calabresa moída e mussarela)",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Alho frito",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Peperone e mussarela",price:"5,00"},
+  {cat:"Esfihas Salgadas",name:"Costela desfiada, cebola roxa e catupiry",price:"5,00"},
   {cat:"Esfihas Salgadas",name:"Camarão, mussarela e cebolinha",price:"6,00"},
   // ESFIHAS DOCES
-  {cat:"Esfihas Doces",name:"Banana c/ mussarela",price:"5,00"},
-  {cat:"Esfihas Doces",name:"Chocolate c/ granulado",price:"5,00"},
-  {cat:"Esfihas Doces",name:"Chocolate c/ banana",price:"5,00"},
-  {cat:"Esfihas Doces",name:"Chocolate c/ m&m",price:"5,00"},
-  {cat:"Esfihas Doces",name:"Prestígio",price:"5,00"},
-  {cat:"Esfihas Doces",name:"Romeu Julieta",price:"5,00"},
-  {cat:"Esfihas Doces",name:"Chocolate c/ morango",price:"5,00"},
-  {cat:"Esfihas Doces",name:"Chocolate ao leite c/ cereja",price:"5,50"},
-  {cat:"Esfihas Doces",name:"Ouro Branco c/ chocolate",price:"5,50"},
-  {cat:"Esfihas Doces",name:"Sonho de Valsa c/ chocolate",price:"5,50"},
-  {cat:"Esfihas Doces",name:"Nutella c/ morango",price:"6,00"},
-  {cat:"Esfihas Doces",name:"Nutella c/ uva",price:"6,00"},
-  {cat:"Esfihas Doces",name:"Nutella c/ leite ninho",price:"6,00"},
+  {cat:"Esfihas Doces",name:"Banana c/ mussarela",price:"6,00"},
+  {cat:"Esfihas Doces",name:"Chocolate c/ granulado",price:"6,00"},
+  {cat:"Esfihas Doces",name:"Chocolate c/ banana",price:"6,00"},
+  {cat:"Esfihas Doces",name:"Chocolate c/ m&m",price:"6,00"},
+  {cat:"Esfihas Doces",name:"Prestígio",price:"6,00"},
+  {cat:"Esfihas Doces",name:"Romeu Julieta",price:"6,00"},
+  {cat:"Esfihas Doces",name:"Chocolate c/ morango",price:"6,00"},
+  {cat:"Esfihas Doces",name:"Chocolate ao leite c/ cereja",price:"6,00"},
+  {cat:"Esfihas Doces",name:"Ouro Branco c/ chocolate",price:"6,00"},
+  {cat:"Esfihas Doces",name:"Sonho de Valsa c/ chocolate",price:"6,00"},
+  {cat:"Esfihas Doces",name:"Nutella c/ morango",price:"7,00"},
+  {cat:"Esfihas Doces",name:"Nutella c/ uva",price:"7,00"},
+  {cat:"Esfihas Doces",name:"Nutella c/ leite ninho",price:"7,00"},
   {cat:"Esfihas Doces",name:"Churros c/ doce de leite e canela",price:"6,00"},
   {cat:"Esfihas Doces",name:"Paçoca c/ chocolate ao leite",price:"6,00"},
   {cat:"Esfihas Doces",name:"Chocolate ao leite c/ kookies",price:"6,00"},
@@ -848,13 +950,13 @@ const MENU = [
   {cat:"Beirutes",num:"02",name:"À Moda II",desc:"Rosbife, ovo, milho, ervilha e catupiry.",price:"40,00"},
   {cat:"Beirutes",num:"03",name:"Atum e Cebola",price:"35,00"},
   {cat:"Beirutes",num:"04",name:"Atum, Cebola e Cheddar",price:"36,00"},
-  {cat:"Beirutes",num:"05",name:"Calabresa Fatiado c/ Cebola",price:"37,00"},
-  {cat:"Beirutes",num:"06",name:"Calabresa c/ Cebola e Cheddar/Catupiry",price:"37,00"},
+  {cat:"Beirutes",num:"05",name:"Calabresa Fatiada c/ Cebola",price:"37,00"},
+  {cat:"Beirutes",num:"06",name:"Calabresa Fatiada c/ Cebola, Cheddar ou Catupiry",price:"37,00"},
   {cat:"Beirutes",num:"07",name:"Lombo",price:"35,00"},
   {cat:"Beirutes",num:"08",name:"Lombo c/ Catupiry ou Cheddar",price:"37,00"},
   {cat:"Beirutes",num:"09",name:"Peito de Peru",price:"34,00"},
-  {cat:"Beirutes",num:"10",name:"Peito de Peru c/ Cheddar/Catupiry",price:"37,00"},
-  {cat:"Beirutes",num:"11",name:"Frango Desfiado c/ Catupiry/Cheddar",price:"37,00"},
+  {cat:"Beirutes",num:"10",name:"Peito de Peru c/ Cheddar ou Catupiry",price:"37,00"},
+  {cat:"Beirutes",num:"11",name:"Frango Desfiado c/ Catupiry ou Cheddar",price:"37,00"},
   {cat:"Beirutes",num:"12",name:"Americano",desc:"Frango desfiado, milho, catupiry e bacon.",price:"39,00"},
   {cat:"Beirutes",num:"13",name:"Brasileiro",desc:"Atum, milho, cebola e catupiry.",price:"38,00"},
   {cat:"Beirutes",num:"14",name:"Carne Seca",desc:"Carne seca, cebola e catupiry.",price:"40,00"},
@@ -862,14 +964,15 @@ const MENU = [
   {cat:"Beirutes",num:"16",name:"Salermo",desc:"Salame e bacon.",price:"35,00"},
   {cat:"Beirutes",num:"17",name:"Costela",desc:"Costela desfiada, cebola roxa e pimenta biquinho.",price:"40,00"},
   {cat:"Beirutes",num:"18",name:"Rosbife",price:"37,00"},
-
   // PORÇÕES
-  {cat:"Porções",name:"Contra filé acebolado",price:"45,00"},
-  {cat:"Porções",name:"Carne de sol",price:"45,00"},
-  {cat:"Porções",name:"Torresmo",price:"40,00"},
-  {cat:"Porções",name:"Calabresa acebolada",price:"26,00"},
+  {cat:"Porções",name:"Contra filé em tiras c/ aipim",price:"50,00"},
+  {cat:"Porções",name:"Contra filé em tiras c/ batata frita",price:"50,00"},
+  {cat:"Porções",name:"Contra filé em tiras acebolado",price:"45,00"},
+  {cat:"Porções",name:"Calabresa defumada c/ cebola roxa",price:"27,00"},
+  {cat:"Porções",name:"Batata frita c/ bacon e cheddar original",price:"33,00"},
   {cat:"Porções",name:"Batata frita",price:"26,00"},
-  {cat:"Porções",name:"Batata c/ cheddar e bacon",price:"35,00"},
+  {cat:"Porções",name:"Carne de sol c/ aipim",price:"45,00"},
+  {cat:"Porções",name:"Torresmo",price:"40,00"},
 ];
 
 const BEBIDAS = [
@@ -878,47 +981,62 @@ const BEBIDAS = [
     {name:"Coca-Cola 1 litro",price:"12,00"},
     {name:"Coca-Cola 600 ml",price:"8,00"},
     {name:"Coca-Cola KS 1 litro",price:"12,00"},
-    {name:"Coca-Cola KS 290ml",price:"5,00"},
+    {name:"Coca-Cola KS 290 ml",price:"4,00"},
     {name:"Guaraná 2 litros",price:"15,00"},
     {name:"Fanta Laranja 2 litros",price:"15,00"},
     {name:"Fanta Uva 2 litros",price:"15,00"},
     {name:"Tubaína 2 litros",price:"10,00"},
     {name:"Coca-Cola lata",price:"5,00"},
     {name:"Guaraná lata",price:"5,00"},
-    {name:"Guaraná Amazônia FYS lata",price:"4,50"},
     {name:"Fanta Laranja lata",price:"5,00"},
     {name:"Fanta Uva lata",price:"5,00"},
-    {name:"Limoneto 500ml",price:"8,00"},
+    {name:"Guaraná Amazônia FYS lata",price:"4,50"},
+    {name:"Limoneto 500 ml",price:"8,00"},
   ]},
-  {sub:"🧃 Sucos Naturais", sabores:"Abacaxi c/ hortelã · Limonada suíça · Acerola · Melancia · Morango · Laranja · Goiaba · Limão · Maracujá", items:[
+  {sub:"💧 Água", items:[
+    {name:"Água mineral com gás",price:"5,00"},
+    {name:"Água mineral sem gás",price:"4,00"},
+  ]},
+  {sub:"🧃 Sucos Naturais", sabores:"Abacaxi c/ hortelã · Limonada suíça · Acerola (água ou laranja) · Melancia (hortelã ou limão) · Morango (leite ou água) · Laranja · Goiaba · Limão · Maracujá", items:[
     {name:"Copo",price:"8,00"},
     {name:"Jarra",price:"15,00"},
   ]},
+  {sub:"🥛 Milk Shakes", items:[
+    {name:"Ovomaltine",price:"18,00"},
+    {name:"Morango",price:"18,00"},
+    {name:"Chocolate",price:"18,00"},
+    {name:"Baunilha",price:"18,00"},
+    {name:"Frapê de coco",price:"18,00"},
+  ]},
   {sub:"🌿 Caldo de Cana", sabores:"Com limão ou abacaxi e gelo", items:[
-    {name:"Copo",price:"5,00"},
+    {name:"Copo",price:"7,00"},
     {name:"Jarra",price:"15,00"},
   ]},
-  {sub:"🍺 Cervejas Long Neck", sabores:"🌾 Sem glúten: Amstel Ultra e Praya", items:[
+  {sub:"🍺 Long Neck", items:[
     {name:"Heineken",price:"10,00"},
     {name:"Heineken Zero",price:"10,00"},
-    {name:"Stella Artois",price:"8,00"},
+    {name:"Stella",price:"9,00"},
+    {name:"Stella Pure Gold",price:"10,00"},
     {name:"Budweiser",price:"9,00"},
-    {name:"Amstel",price:"9,00"},
-    {name:"Amstel Ultra s/ Glúten lata",price:"5,00"},
-    {name:"Praya s/ Glúten",price:"7,00"},
-    {name:"Baden Baden lata",price:"9,00"},
+    {name:"Amstel",price:"12,00"},
   ]},
-  {sub:"🍺 Cervejas 600ml", items:[
+  {sub:"🍺 Cervejas 600 ml", items:[
     {name:"Heineken",price:"17,00"},
-    {name:"Amstel",price:"11,00"},
+    {name:"Stella",price:"17,00"},
     {name:"Budweiser",price:"12,00"},
     {name:"Original",price:"12,00"},
     {name:"Antarctica",price:"11,00"},
     {name:"Brahma",price:"11,00"},
     {name:"Skol",price:"11,00"},
   ]},
-  {sub:"🍹 Caipirinhas", sabores:"Limão · Kiwi · Tropical · Morango · Maracujá · Abacaxi", items:[
-    {name:"Vodka Smirnoff",price:"12,00"},
+  {sub:"🍺 Cervejas Lata", sabores:"✓ Amstel Ultra: sem glúten", items:[
+    {name:"Baden Witbier",price:"9,00"},
+    {name:"Baden Cristal",price:"9,00"},
+    {name:"Amstel Ultra",price:"5,00"},
+  ]},
+  {sub:"🍹 Caipirinhas", sabores:"Sabores: Limão · Kiwi · Tropical (morango, kiwi e abacaxi) · Morango · Maracujá · Abacaxi", items:[
+    {name:"Caipirinha",price:"12,00"},
+    {name:"Vodka Smirnoff",price:"14,00"},
     {name:"Velho Barreiro",price:"10,00"},
     {name:"Saquê",price:"14,00"},
   ]},
@@ -938,15 +1056,10 @@ const BEBIDAS = [
     {name:"Catuaba Selvagem",price:"6,00"},
     {name:"Catuaba + Paratudo",price:"12,00"},
   ]},
-  {sub:"💧 Água", items:[
-    {name:"Mineral com gás",price:"5,00"},
-    {name:"Mineral sem gás",price:"4,00"},
-  ]},
-  {sub:"🍷 Vinhos", items:[
-    {name:"Taça (tinto ou branco)",price:"10,00"},
+  {sub:"🍷 Vinhos", sabores:"Tinto ou Branco", items:[
+    {name:"Taça",price:"10,00"},
   ]},
 ];
-
 const GRID_CATS=["Esfihas Salgadas","Esfihas Doces","Beirutes","Porções"];
 var cats = ["Todos"];
 (function(){
@@ -977,13 +1090,65 @@ function renderSections(){ renderPromo(); renderMenu(); }
 
 function renderPromo(){
   var el = document.getElementById("promo-section");
-  if(catAtiva!=="Todos" && catAtiva!=="Pizzas Salgadas"){ el.innerHTML=""; return; }
-  var ps = ["Baiana","Brasileira","Lombo Especial","Bauru","Caculé","Americana","Palmito"];
-  var ph = ""; for(var i=0;i<ps.length;i++) ph += '<span class="promo-pill">'+ps[i]+'</span>';
-  el.innerHTML = '<div class="promo-banner"><div class="promo-inner"><h3>🔥 PROMOÇÃO DE PIZZAS</h3><div class="promo-pills">'+ph+'</div><div class="promo-destaque"><div><div class="promo-preco-label">Preço promocional</div><div class="promo-preco-val">R$ 39,90</div><div class="promo-borda">✅ Borda recheada grátis!</div></div></div><p class="promo-obs">Válido de segunda a quinta · Exceto vésperas e feriados</p></div></div>';
+  var out = "";
+  if(catAtiva==="Todos" || catAtiva==="Pizzas Salgadas"){
+    var ps = ["Baiana","Brasileira","Lombo Especial","Bauru","Caculé","Americana","Palmito"];
+    var ph = ""; for(var i=0;i<ps.length;i++) ph += '<span class="promo-pill">'+ps[i]+'</span>';
+    out += '<div class="promo-banner"><div class="promo-inner"><h3><span style="display:inline-block;animation:fireFlicker 1.6s ease-in-out infinite">🔥</span> PROMOÇÃO DE PIZZAS</h3><div class="promo-pills">'+ph+'</div><div class="promo-destaque"><div><div class="promo-preco-label">Preço promocional</div><div class="promo-preco-val">R$ 42,90</div><div class="promo-borda">✅ Borda recheada grátis!</div></div></div><p class="promo-obs">Válido de segunda a quinta · Exceto vésperas e feriados</p></div></div>';
+  }
+  if(catAtiva==="Todos" || catAtiva==="Bebidas"){
+    out += '<div class="promo-banner amstel-banner"><div class="amstel-inner">' +
+      '<span class="amstel-emoji">🍻</span>' +
+      '<div class="amstel-txt">' +
+        '<div class="amstel-titulo">PROMOÇÃO AMSTEL</div>' +
+        '<div class="amstel-frase">Na compra de <strong>3 Amstel</strong>, a próxima é <strong>por nossa conta!</strong></div>' +
+        '<div class="amstel-obs">Consulte o garçom para participar</div>' +
+      '</div>' +
+    '</div></div>';
+  }
+  el.innerHTML = out;
 }
 
 function renderMenu(){
+  renderMenuCore();
+  initReveal();
+}
+
+var revealObserver = null;
+function initReveal(){
+  var sel = "#promo-section .promo-banner, #promo-section .amstel-banner, #conteudo .section-title, #conteudo .pizza-card, #conteudo .mini-card, #conteudo .beb-subtitle, #conteudo .beb-card, #conteudo .sabores-note";
+  var els = document.querySelectorAll(sel);
+  if (revealObserver) { revealObserver.disconnect(); revealObserver = null; }
+  var i;
+  // Durante busca ou sem suporte: mostra direto, sem animar a cada tecla
+  if (busca || !("IntersectionObserver" in window)) {
+    for (i = 0; i < els.length; i++) {
+      els[i].classList.add("reveal");
+      els[i].classList.add("in");
+    }
+    return;
+  }
+  for (i = 0; i < els.length; i++) {
+    els[i].classList.add("reveal");
+  }
+  revealObserver = new IntersectionObserver(function(entries){
+    var delay = 0;
+    for (var j = 0; j < entries.length; j++) {
+      if (entries[j].isIntersecting) {
+        (function(el, d){
+          setTimeout(function(){ el.classList.add("in"); }, d);
+        })(entries[j].target, delay);
+        delay += 50;
+        revealObserver.unobserve(entries[j].target);
+      }
+    }
+  }, { rootMargin: "0px 0px -6% 0px", threshold: 0.05 });
+  for (i = 0; i < els.length; i++) {
+    revealObserver.observe(els[i]);
+  }
+}
+
+function renderMenuCore(){
   var q = busca.toLowerCase();
   var el = document.getElementById("conteudo");
 
@@ -1047,9 +1212,6 @@ function renderGroup(items, cat){
       out += '<div class="mini-price">R$ '+it.price+'</div></div>';
     }
     out += '</div>';
-    if(cat==="Porções"){
-      out += '<div class="acomp-note">🍟 <strong>Acompanhamentos disponíveis</strong><br>1 acompanhamento: <strong>R$ 5,00</strong> &nbsp;·&nbsp; 2 acompanhamentos: <strong>R$ 10,00</strong><br><span style="font-size:10.5px;opacity:0.6">Opções: Aipim · Batata Frita</span></div>';
-    }
     return out;
   }
   for(var i=0;i<items.length;i++){
@@ -1080,46 +1242,6 @@ function irParaBebidas(){
 
 document.getElementById("busca").addEventListener("input", function(e){ busca=e.target.value; renderMenu(); });
 
-
-  var cards = "";
-// AVALIAÇÃO
-var avalNota = 0;
-var WHATS = "5577981065139";
-var INSTA_URL = "https://www.instagram.com/pizzaria.nicolecacule?igsh=MmhrcHJ5M3FoOWdr";
-
-var estrelas = document.querySelectorAll(".aval-estrela");
-for (var e = 0; e < estrelas.length; e++) {
-  estrelas[e].addEventListener("click", function() {
-    avalNota = parseInt(this.getAttribute("data-v"));
-    for (var k = 0; k < estrelas.length; k++) {
-      if (parseInt(estrelas[k].getAttribute("data-v")) <= avalNota) {
-        estrelas[k].classList.add("ativa");
-      } else {
-        estrelas[k].classList.remove("ativa");
-      }
-    }
-    document.getElementById("avalComentario").style.display = "block";
-    document.getElementById("avalBtn").style.display = "block";
-  });
-}
-
-document.getElementById("avalBtn").addEventListener("click", function() {
-  if (avalNota === 0) return;
-  var coment = document.getElementById("avalComentario").value.trim();
-  var msg = document.getElementById("avalMsg");
-  if (avalNota >= 4) {
-    msg.style.display = "block";
-    msg.innerHTML = "💛 Que alegria! Você será levado ao nosso Instagram para compartilhar...";
-    setTimeout(function() { window.open(INSTA_URL, "_blank"); }, 1500);
-  } else {
-    msg.style.display = "block";
-    msg.innerHTML = "Obrigado pelo retorno! Vamos melhorar. Enviando sua mensagem...";
-    var texto = "Olá! Avaliei o cardápio com " + avalNota + " estrela(s).";
-    if (coment) texto += " Comentário: " + coment;
-    var url = "https://wa.me/" + WHATS + "?text=" + encodeURIComponent(texto);
-    setTimeout(function() { window.open(url, "_blank"); }, 1500);
-  }
-});
 
 renderCats();
 renderSections();
